@@ -1,20 +1,15 @@
 import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import MainStack from "./src/navigator/MainStack";
+import store from "./src/store";
+import { Provider } from "react-redux";
 
 export default function App() {
   return (
     <NavigationContainer>
-      <MainStack />
+      <Provider store={store}>
+        <MainStack />
+      </Provider>
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
