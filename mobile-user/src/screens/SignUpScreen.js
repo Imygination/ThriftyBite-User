@@ -36,7 +36,7 @@ function SignUpScreen({ navigation }) {
         <TouchableOpacity>
           <Text
             style={styles.loginText}
-            onPress={() => navigation.push("LoginPage")}
+            onPress={() => navigation.push("LoginScreen")}
           >
             Login
           </Text>

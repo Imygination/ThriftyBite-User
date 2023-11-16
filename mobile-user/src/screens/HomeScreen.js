@@ -44,13 +44,13 @@ export default function HomeScreen({ navigation }) {
       {/* <View
         style={{ position: "absolute", zIndex: 1, height: 500, width: 300 }}
       > */}
-        {/* <FloatingAction
+      {/* <FloatingAction
             actions={actions}
             onPressItem={(name) => {
               console.log(`selected button: ${name}`);
             }}
           /> */}
-        {/* <FAB
+      {/* <FAB
           icon="plus"
           style={styles.fab}
           onPress={() => console.log("Pressed")}
@@ -128,9 +128,13 @@ export default function HomeScreen({ navigation }) {
             marginTop: 10,
           }}
         >
-          <MainCard />
-          <MainCard />
-          <MainCard />
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <MainCard />
+            <MainCard />
+            <MainCard />
+            <MainCard />
+            <MainCard />
+          </ScrollView>
         </View>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <Text variant="titleLarge" style={{ margin: 10, fontWeight: "900" }}>
@@ -143,6 +147,7 @@ export default function HomeScreen({ navigation }) {
             flexWrap: "wrap",
             flex: 1,
             marginTop: 10,
+            marginLeft: 20,
           }}
         >
           <MainCard />
