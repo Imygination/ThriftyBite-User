@@ -51,7 +51,7 @@ export const loginSeller = (body) => {
                 throw new Error("Password must be provided")
             }
             const {data} = await Axios.post('/login',body)
-            return data
+            localStorage.access_token = data.access_token
         } catch (error) {
             console.log(error)
             throw error
@@ -61,6 +61,7 @@ export const loginSeller = (body) => {
 
 export const registerSeller = (body) => {
     return async () => {
+        console.log(body)
         try {
             if(!body.username) {
                 throw new Error("Username must be provided")

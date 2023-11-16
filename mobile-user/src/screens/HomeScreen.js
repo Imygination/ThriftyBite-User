@@ -20,7 +20,6 @@ export default function HomeScreen({ navigation }) {
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const foods = useSelector(function (state) {
-    console.log(state.foodReducer.hotDealsFood);
     return state.foodReducer.hotDealsFood;
   });
 
