@@ -1,5 +1,6 @@
 import { Axios } from "../../helpers/axios";
 import { FOOD_FETCH_Detail, FOOD_FETCH_HOT_DEALS } from "./actionTypes";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export function fetchHotDealsFood(payload) {
   return {
@@ -51,7 +52,7 @@ export const loginSeller = (body) => {
                 throw new Error("Password must be provided")
             }
             const {data} = await Axios.post('/login',body)
-            localStorage.access_token = data.access_token
+            await AsyncStorage.setItem('access_token', data.access_token)
         } catch (error) {
             console.log(error)
             throw error
@@ -61,7 +62,6 @@ export const loginSeller = (body) => {
 
 export const registerSeller = (body) => {
     return async () => {
-        console.log(body)
         try {
             if(!body.username) {
                 throw new Error("Username must be provided")

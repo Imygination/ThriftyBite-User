@@ -8,15 +8,24 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useDispatch } from "react-redux";
+import { loginSeller } from "../store/actions/actionCreators";
 
 function LoginPage({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-
+  const dispatch = useDispatch();
   const handleLogin = () => {
     console.log("Login...");
-    navigation.navigate("HomeScreen");
+    let dataLogin = { email, password };
+    dispatch(loginSeller(dataLogin))
+      .then(() => {
+        navigation.navigate("HomeScreen");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const toggleShowPassword = () => {
