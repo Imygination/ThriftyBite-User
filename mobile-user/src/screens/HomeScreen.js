@@ -11,8 +11,20 @@ import { FAB, Searchbar, Text } from "react-native-paper";
 import utility from "../style/utility,";
 import MainCard from "../components/MainCard";
 import { FloatingAction } from "react-native-floating-action";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 
 export default function HomeScreen({ navigation }) {
+  const dispatch = useDispatch()
+  const food = useSelector(function(state){
+    return state.hotDealsFood
+  })
+
+  useEffect(()=>{
+    dispatch(fetchFoodHotDeals)
+  }, [])
+  
+  
   const actions = [
     {
       text: "Accessibility",
@@ -39,6 +51,10 @@ export default function HomeScreen({ navigation }) {
     //   position: 4
     // }
   ];
+  
+
+
+
   return (
     <SafeAreaView style={utility.droidSafeArea}>
       {/* <View
@@ -113,7 +129,9 @@ export default function HomeScreen({ navigation }) {
         ></View>
         <Searchbar
           placeholder="Mau belanja apa?"
-          style={{ margin: 10, marginTop: 30, backgroundColor: "#5db075" }}
+          style={{ margin: 10, marginTop: 30, backgroundColor: "#5db075"}}
+          placeholderTextColor={'white'}
+          inputStyle={{ color: 'white' }}
         />
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <Text variant="titleLarge" style={{ margin: 10, fontWeight: "900" }}>
