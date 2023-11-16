@@ -12,19 +12,30 @@ import utility from "../style/utility,";
 import MainCard from "../components/MainCard";
 import { FloatingAction } from "react-native-floating-action";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { fetchFoodHotDeals } from "../store/actions/actionCreators";
+import { ActivityIndicator } from "react-native";
 
 export default function HomeScreen({ navigation }) {
-  const dispatch = useDispatch()
-  const food = useSelector(function(state){
-    return state.hotDealsFood
-  })
+  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  const foods = useSelector(function (state) {
+    console.log(state.foodReducer.hotDealsFood);
+    return state.foodReducer.hotDealsFood;
+  });
 
-  useEffect(()=>{
-    dispatch(fetchFoodHotDeals)
-  }, [])
+  useEffect(() => {
+    setLoading(true)
+        dispatch(fetchFoodHotDeals())
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+  }, []);
   
-  
+
   const actions = [
     {
       text: "Accessibility",
@@ -51,9 +62,6 @@ export default function HomeScreen({ navigation }) {
     //   position: 4
     // }
   ];
-  
-
-
 
   return (
     <SafeAreaView style={utility.droidSafeArea}>
@@ -129,9 +137,9 @@ export default function HomeScreen({ navigation }) {
         ></View>
         <Searchbar
           placeholder="Mau belanja apa?"
-          style={{ margin: 10, marginTop: 30, backgroundColor: "#5db075"}}
-          placeholderTextColor={'white'}
-          inputStyle={{ color: 'white' }}
+          style={{ margin: 10, marginTop: 30, backgroundColor: "#5db075" }}
+          placeholderTextColor={"white"}
+          inputStyle={{ color: "white" }}
         />
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <Text variant="titleLarge" style={{ margin: 10, fontWeight: "900" }}>
@@ -168,13 +176,11 @@ export default function HomeScreen({ navigation }) {
             marginLeft: 20,
           }}
         >
-          <MainCard />
-          <MainCard />
-          <MainCard />
-          <MainCard />
-          <MainCard />
-          <MainCard />
-          <MainCard />
+          {loading ? (
+            <ActivityIndicator size="large" color="#5db075" />
+          ) : (
+            foods.map((food) => <MainCard foods={food} key={food.id} />)
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>

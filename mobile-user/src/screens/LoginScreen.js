@@ -16,7 +16,7 @@ function LoginPage({ navigation }) {
 
   const handleLogin = () => {
     console.log("Login...");
-    navigation.navigate("CreateStore");
+    navigation.navigate("HomeScreen");
   };
 
   const toggleShowPassword = () => {

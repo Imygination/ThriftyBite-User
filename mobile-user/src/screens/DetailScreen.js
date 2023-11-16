@@ -7,12 +7,22 @@ import {
   Text,
 } from "react-native";
 import { Button } from "@rneui/themed";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchFoodDetail } from "../store/actions/actionCreators";
+import { useEffect } from "react";
 
-export default function DetailScreen() {
+export default function DetailScreen({route}) {
+  const id = +route.params.id
+  const dispatch = useDispatch()
+  const detailFood = useSelector(function(state){
+    return state.foodReducer.foodDetail
+  })
+  useEffect(()=> {
+    dispatch(fetchFoodDetail(id))
+  },[])
   const { width, height } = Dimensions.get("window");
   return (
-    <View style={{ width: 400, height: height * 0.7, padding: 20 , marginTop:20}}>
-      <ScrollView>
+    <View style={{ width: 400, height: height * 1, padding: 20 , marginTop:20}}>
         <View
           style={{
             borderColor: "white",
@@ -25,7 +35,7 @@ export default function DetailScreen() {
         >
           <Image
             source={{
-              uri: "https://allwaysdelicious.com/wp-content/uploads/2015/01/char-siu-bao-vert-1.jpg",
+              uri: detailFood.imageUrl,
             }}
             style={{
               flex: 1,
@@ -50,20 +60,19 @@ export default function DetailScreen() {
               style={{
                 fontFamily: "serif",
                 fontSize: 27,
+                textAlign:"center"
               }}
             >
-              Food
+              {detailFood.name}
             </Text>
-            <Text style={{fontFamily: "serif",
-                fontSize: 20,}}>Nama Toko</Text>
               <Text style={{fontFamily: "serif",
-                fontSize: 16,}}>Address :</Text>
+                fontSize: 16, marginTop:10}}>Address : </Text>
           </View>
           <View>
             <Text style={{fontFamily: "serif",
-                fontSize: 16,}}>Stock : </Text>
+                fontSize: 16, marginTop:10}}>Stock : {detailFood.stock}</Text>
             <Text style={{fontFamily: "serif",
-                fontSize: 16, marginTop:6}}>Description : </Text>
+                fontSize: 16, marginTop:10}}>Description : {detailFood.description}</Text>
           </View>
         </View>
         <View
@@ -99,7 +108,6 @@ export default function DetailScreen() {
             ></Button>
           </View>
         </View>
-      </ScrollView>
     </View>
   );
 }

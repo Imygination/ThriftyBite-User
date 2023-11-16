@@ -18,9 +18,7 @@ export function fetchDetailFood(payload) {
 export const fetchFoodHotDeals = () => {
   return async (dispatch) => {
     try {
-      const response = await Axios.get("/foods");
-      if (!response.ok) throw new Error("Something wrong!");
-      const data = await response.json();
+      const {data} = await Axios.get("/foods");
       const action = fetchHotDealsFood(data);
       dispatch(action);
     } catch (error) {
@@ -33,9 +31,7 @@ export const fetchFoodHotDeals = () => {
 export const fetchFoodDetail = (id) => {
   return async (dispatch) => {
     try {
-      const response = await Axios.get("/foods/" + id);
-      if (!response.ok) throw new Error("Something wrong!");
-      const data = await response.json();
+      const {data} = await Axios.get("/foods/" + id);
       const action = fetchDetailFood(data);
       dispatch(action);
     } catch (error) {
@@ -44,3 +40,45 @@ export const fetchFoodDetail = (id) => {
     }
   };
 };
+
+export const loginSeller = (body) => {
+    return async () => {
+        try {
+            if(!body.email) {
+                throw new Error("Email must be provided")
+            }
+            if(!body.password) {
+                throw new Error("Password must be provided")
+            }
+            const {data} = await Axios.post('/login',body)
+            return data
+        } catch (error) {
+            console.log(error)
+            throw error
+        }
+    }
+}
+
+export const registerSeller = (body) => {
+    return async () => {
+        try {
+            if(!body.username) {
+                throw new Error("Username must be provided")
+            }
+            if(!body.email) {
+                throw new Error("Email must be provided")
+            }
+            if(!body.phoneNumber) {
+                throw new Error("Phone number must be provided")
+            }
+            if(!body.password) {
+                throw new Error("Password must be provided")
+            }
+            const {data} = await Axios.post('/register',body)
+            return data
+        } catch (error) {
+            console.log(error)
+            throw error
+        }
+    }
+}
