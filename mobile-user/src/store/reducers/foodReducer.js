@@ -1,8 +1,9 @@
-import { FOOD_FETCH_Detail, FOOD_FETCH_HOT_DEALS } from "../actions/actionTypes";
+import { FOOD_FETCH_Detail, FOOD_FETCH_HOT_DEALS, FOOD_FETCH_NEARBY } from "../actions/actionTypes";
 
 const initialState = {
   hotDealsFood: [],
-  foodDetail: ""
+  foodDetail: "",
+  foodNearby: []
 };
 
 export default function foodReducer(state = initialState, action) {
@@ -16,6 +17,12 @@ export default function foodReducer(state = initialState, action) {
     return {
       ...state,
       foodDetail: action.payload,
+    }
+  }
+  if (action.type === FOOD_FETCH_NEARBY) {
+    return {
+      ...state,
+      foodNearby: action.payload,
     }
   }
   return state;
