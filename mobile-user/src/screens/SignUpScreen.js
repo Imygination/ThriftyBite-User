@@ -9,17 +9,26 @@ import {
 } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useDispatch } from "react-redux";
+import { registerSeller } from "../store/actions/actionCreators";
 
 function SignUpScreen({ navigation }) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [role, setRole] = useState("seller")
   const [showPassword, setShowPassword] = useState(false);
-
+  const dispatch = useDispatch()
   const handleSignUp = () => {
-    console.log("Signing up...");
-    navigation.navigate("LoginPage");
+    let newSeller ={username, email, password, phoneNumber, role}
+    dispatch(registerSeller(newSeller))
+    .then(()=>{
+      navigation.navigate("LoginScreen");
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
   };
 
   const toggleShowPassword = () => {
