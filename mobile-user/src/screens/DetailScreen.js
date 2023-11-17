@@ -10,8 +10,10 @@ import { Button } from "@rneui/themed";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFoodDetail } from "../store/actions/actionCreators";
 import { useEffect } from "react";
+import MapView, { Marker } from 'react-native-maps';
 
-export default function DetailScreen({route}) {
+export default function DetailScreen({route, navigation}) {
+  
   const id = +route.params.id
   const dispatch = useDispatch()
   const detailFood = useSelector(function(state){
@@ -20,9 +22,13 @@ export default function DetailScreen({route}) {
   useEffect(()=> {
     dispatch(fetchFoodDetail(id))
   },[])
+  if (!detailFood || detailFood.length === 0) {
+    return null;
+  }
   const { width, height } = Dimensions.get("window");
   return (
-    <View style={{ width: 400, height: height * 1, padding: 20 , marginTop:20}}>
+    <View style={{ width: 400, height: height * 0.9, padding: 20 , marginTop:5}}>
+      <Text onPress={() => navigation.goBack()}>Back To HomePage</Text>
         <View
           style={{
             borderColor: "white",
@@ -48,7 +54,7 @@ export default function DetailScreen({route}) {
         </View>
         <View
           style={{
-            margin: 10,
+            margin: 5,
           }}
         >
           <View
@@ -66,13 +72,15 @@ export default function DetailScreen({route}) {
               {detailFood.name}
             </Text>
               <Text style={{fontFamily: "serif",
-                fontSize: 16, marginTop:10}}>Address : </Text>
+                fontSize: 16, marginTop:10}}>Toko : {detailFood.Store.name}</Text>
+                <Text style={{fontFamily: "serif",
+                fontSize: 16, marginTop:5}}>Address : {detailFood.Store.address}</Text>
           </View>
           <View>
             <Text style={{fontFamily: "serif",
-                fontSize: 16, marginTop:10}}>Stock : {detailFood.stock}</Text>
+                fontSize: 16, marginTop:5}}>Stock : {detailFood.stock}</Text>
             <Text style={{fontFamily: "serif",
-                fontSize: 16, marginTop:10}}>Description : {detailFood.description}</Text>
+                fontSize: 16, marginTop:5}}>{detailFood.description}</Text>
           </View>
         </View>
         <View
@@ -82,9 +90,26 @@ export default function DetailScreen({route}) {
             justifyContent: "center",
           }}
         >
+          <MapView
+          style={{ flex: 2, width: '100%', marginTop: 10 }}
+          initialRegion={{
+            latitude: detailFood.Store.location.coordinates[1],
+            longitude: detailFood.Store.location.coordinates[0],
+            latitudeDelta: 0.01,
+            longitudeDelta: 0.01,
+          }}
+        >
+          <Marker
+            coordinate={{
+              latitude: detailFood.Store.location.coordinates[1],
+              longitude: detailFood.Store.location.coordinates[0],
+            }}
+            title={detailFood.Store.name}
+          />
+        </MapView>
           <View
             style={{
-              marginTop: 50,
+              marginTop: 10,
               width: 200,
               flex: 1,
               alignItems: "center",
