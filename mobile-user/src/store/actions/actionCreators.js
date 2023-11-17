@@ -1,6 +1,10 @@
 import { Axios } from "../../helpers/axios";
-import { FOOD_FETCH_Detail, FOOD_FETCH_HOT_DEALS } from "./actionTypes";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {
+  FOOD_FETCH_Detail,
+  FOOD_FETCH_HOT_DEALS,
+  FOOD_FETCH_NEARBY,
+} from "./actionTypes";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export function fetchHotDealsFood(payload) {
   return {
@@ -16,10 +20,17 @@ export function fetchDetailFood(payload) {
   };
 }
 
+export function fetchNearbyFood(payload) {
+  return {
+    type: FOOD_FETCH_NEARBY,
+    payload,
+  };
+}
+
 export const fetchFoodHotDeals = () => {
   return async (dispatch) => {
     try {
-      const {data} = await Axios.get("/foods");
+      const { data } = await Axios.get("/foods");
       const action = fetchHotDealsFood(data);
       dispatch(action);
     } catch (error) {
@@ -32,7 +43,7 @@ export const fetchFoodHotDeals = () => {
 export const fetchFoodDetail = (id) => {
   return async (dispatch) => {
     try {
-      const {data} = await Axios.get("/foods/" + id);
+      const { data } = await Axios.get("/foods/" + id);
       const action = fetchDetailFood(data);
       dispatch(action);
     } catch (error) {
@@ -43,43 +54,58 @@ export const fetchFoodDetail = (id) => {
 };
 
 export const loginSeller = (body) => {
-    return async () => {
-        try {
-            if(!body.email) {
-                throw new Error("Email must be provided")
-            }
-            if(!body.password) {
-                throw new Error("Password must be provided")
-            }
-            const {data} = await Axios.post('/login',body)
-            await AsyncStorage.setItem('access_token', data.access_token)
-        } catch (error) {
-            console.log(error)
-            throw error
-        }
+  return async () => {
+    try {
+      if (!body.email) {
+        throw new Error("Email must be provided");
+      }
+      if (!body.password) {
+        throw new Error("Password must be provided");
+      }
+      const { data } = await Axios.post("/login", body);
+      await AsyncStorage.setItem("access_token", data.access_token);
+    } catch (error) {
+      console.log(error);
+      throw error;
     }
-}
+  };
+};
 
 export const registerSeller = (body) => {
-    return async () => {
-        try {
-            if(!body.username) {
-                throw new Error("Username must be provided")
-            }
-            if(!body.email) {
-                throw new Error("Email must be provided")
-            }
-            if(!body.phoneNumber) {
-                throw new Error("Phone number must be provided")
-            }
-            if(!body.password) {
-                throw new Error("Password must be provided")
-            }
-            const {data} = await Axios.post('/register',body)
-            return data
-        } catch (error) {
-            console.log(error)
-            throw error
-        }
+  return async () => {
+    try {
+      if (!body.username) {
+        throw new Error("Username must be provided");
+      }
+      if (!body.email) {
+        throw new Error("Email must be provided");
+      }
+      if (!body.phoneNumber) {
+        throw new Error("Phone number must be provided");
+      }
+      if (!body.password) {
+        throw new Error("Password must be provided");
+      }
+      const { data } = await Axios.post("/register", body);
+      return data;
+    } catch (error) {
+      console.log(error);
+      throw error;
     }
-}
+  };
+};
+
+export const fetchFoodNearby = (params) => {
+  const latitude = params.coords.latitude;
+  const longitude = params.coords.longitude;
+  return async (dispatch) => {
+    try {
+      const { data } = await Axios.get(`/foods?latitude=${latitude}&longitude=${longitude}`);
+      const action = fetchNearbyFood(data);
+      dispatch(action);
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+};
