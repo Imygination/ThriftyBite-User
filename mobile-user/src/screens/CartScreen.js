@@ -6,6 +6,7 @@ import { View } from "react-native";
 import { addCartFood, minusCartFood } from "../store/actions/actionCreators";
 import store from "../store";
 import utility from "../style/utility,";
+import { Axios } from "../helpers/axios";
 
 export default function CartScreen({ route, navigation }) {
   const dispatch = useDispatch();
@@ -64,6 +65,28 @@ export default function CartScreen({ route, navigation }) {
   const total = cart.reduce((accumulator, currentValue) => {
     return accumulator + currentValue.price;
   }, 0);
+
+  const submitOrder = async () => {
+    try {
+      console.log(cart);
+      if (cart.length === 0) {
+        throw new Error("Order List Empty");
+      }
+      const token = await AsyncStorage.getItem("access_token");
+      const { data } = await Axios({
+        method: "post",
+        url: "/orders",
+        data: cart,
+        headers: {
+          access_token: token,
+        },
+      });
+      console.log(data);
+      console.log("Success Fetch Order...");
+    } catch (error) {
+      console.log(error.response.data);
+    }
+  };
 
   return (
     <View>
@@ -136,12 +159,15 @@ export default function CartScreen({ route, navigation }) {
           selectPageDropdownLabel={"Rows per page"}
         />
       </DataTable>
-      <Text variant="titleLarge" style={{textAlign:"center", marginTop:20, color:"#5db075"}}>
+      <Text
+        variant="titleLarge"
+        style={{ textAlign: "center", marginTop: 20, color: "#5db075" }}
+      >
         TOTAL CART: {total}
       </Text>
       <Button
         mode="contained"
-        onPress={() => console.log(cart ,"<<<<<<<<<<<<<")}
+        onPress={submitOrder}
         buttonColor="#5db075"
         style={{ margin: 50 }}
       >

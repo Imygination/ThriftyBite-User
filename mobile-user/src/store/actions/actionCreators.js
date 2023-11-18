@@ -1,7 +1,12 @@
 import { Axios } from "../../helpers/axios";
-import { ADD_CART_FOOD, FOOD_FETCH_Detail, FOOD_FETCH_HOT_DEALS, MINUS_CART_FOOD, FOOD_FETCH_NEARBY } from "./actionTypes";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import {
+  ADD_CART_FOOD,
+  FOOD_FETCH_Detail,
+  FOOD_FETCH_HOT_DEALS,
+  MINUS_CART_FOOD,
+  FOOD_FETCH_NEARBY,
+} from "./actionTypes";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export function fetchHotDealsFood(payload) {
   return {
@@ -16,7 +21,6 @@ export function fetchDetailFood(payload) {
     payload,
   };
 }
-
 
 export function addCartFood(payload) {
   return {
@@ -112,12 +116,38 @@ export const fetchFoodNearby = (params) => {
   const longitude = params.coords.longitude;
   return async (dispatch) => {
     try {
-      const { data } = await Axios.get(`/foods?latitude=${latitude}&longitude=${longitude}`);
+      const { data } = await Axios.get(
+        `/foods?latitude=${latitude}&longitude=${longitude}`
+      );
       const action = fetchNearbyFood(data);
       dispatch(action);
     } catch (error) {
       console.log(error);
       throw error;
     }
-  }
-}
+  };
+};
+
+export const fetchOrder = (orderList) => {
+  return async (dispatch) => {
+    try {
+      if (!orderList) {
+        throw new Error("Order List Empty");
+      }
+      const token = await AsyncStorage.getItem("access_token");
+      const { data } = await Axios.post(
+        "/orders",
+        { orderList },
+        {
+          headers: {
+            access_token: token,
+          },
+        }
+      );
+      console.log(data);
+      console.log("Success Fetch Order...");
+    } catch (error) {
+      console.log(error.response.data);
+    }
+  };
+};
