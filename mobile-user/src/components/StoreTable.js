@@ -1,25 +1,28 @@
 import React from "react";
 import { View, Image, Text, StyleSheet, Button } from "react-native";
 
-const StoreTable = () => (
-  <View style={styles.container}>
-    <Image
-      source={{
-        uri: "https://omni.harvestcakes.com/media/thumb/product_photo/2023/7/4/k9osszjhn2bp96ouw49q5f_size_480.jpg",
-      }}
-      style={styles.storeImage}
-    />
-    <View style={styles.textColumn}>
-      <View style={styles.textFlexColumn}>
-        <Text style={styles.foodName}>HarvestCake</Text>
-        <Text style={styles.foodPrice}>350000</Text>
-      </View>
-      <View style={styles.buttonFlexColumn}>
-        <Button title="Order" color="#5db075" style={styles.orderButton} />
+const StoreTable = (props) => {
+  const food = props.foods;
+  return (
+    <View style={styles.container}>
+      <Image
+        source={{
+          uri: food.imageUrl,
+        }}
+        style={styles.storeImage}
+      />
+      <View style={styles.textColumn}>
+        <View style={styles.textFlexColumn}>
+          <Text style={styles.foodName}>{food.name}</Text>
+          <Text style={styles.foodPrice}>Rp. {food.price}</Text>
+        </View>
+        <View style={styles.buttonFlexColumn}>
+          <Button title="Order" color="#5db075" style={styles.orderButton} />
+        </View>
       </View>
     </View>
-  </View>
-);
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

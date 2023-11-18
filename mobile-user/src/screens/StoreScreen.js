@@ -1,17 +1,36 @@
-import React, { useState } from "react";
-import { StyleSheet, View, Text, ScrollView } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  StyleSheet,
+  View,
+  Text,
+  ScrollView,
+  ActivityIndicator,
+} from "react-native";
 import MapView, { Marker } from "react-native-maps";
-import StoreImageContainer from '../components/StoreTable';
-import { useDispatch } from "react-redux";
+import StoreTable from "../components/StoreTable";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchDetailStore } from "../store/actions/actionCreators";
 
 const StoreScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
-  
-
-
-
-  
+  useEffect(() => {
+    setLoading(true);
+    try {
+      dispatch(fetchDetailStore());
+    } catch (error) {
+      console.error("Error getting location:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+  const store = useSelector(function (state) {
+    return state.storeReducer.storeDetail;
+  });
+  if (!store) {
+    return <ActivityIndicator size="large" color="#5db075" />;
+  }
+  const foods = store.Food;
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <Text onPress={() => navigation.goBack()}>Go Back</Text>
@@ -19,25 +38,29 @@ const StoreScreen = ({ navigation }) => {
         <MapView
           style={styles.map}
           initialRegion={{
-            latitude: -6.942981263106864,
-            longitude: 107.59278847659893,
+            latitude: store.location.coordinates[1],
+            longitude: store.location.coordinates[0],
             latitudeDelta: 0.01,
             longitudeDelta: 0.01,
           }}
         >
           <Marker
             coordinate={{
-              latitude: -6.942981263106864,
-              longitude: 107.59278847659893,
+              latitude: store.location.coordinates[1],
+              longitude: store.location.coordinates[0],
             }}
             title="Andika Store"
           />
         </MapView>
         <View style={styles.storeInfoContainer}>
-          <Text style={styles.storeInfoText}>Andika Store</Text>
-          <Text style={styles.storeInfoAddress}>Yogyakarta dekat rumah sakit umum</Text>
+          <Text style={styles.storeInfoText}>{store.name}</Text>
+          <Text style={styles.storeInfoAddress}>{store.address}</Text>
         </View>
-        <StoreImageContainer />
+        {loading ? (
+          <ActivityIndicator size="large" color="#5db075" />
+        ) : (
+          foods.map((food) => <StoreTable foods={food} key={food.id} />)
+        )}
       </View>
     </ScrollView>
   );

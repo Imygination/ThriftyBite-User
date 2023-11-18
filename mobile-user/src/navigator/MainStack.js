@@ -11,10 +11,6 @@ const Stack = createNativeStackNavigator();
 export default function MainStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="StoreScreen" component={StoreScreen} options={{
-          headerShown: false,
-          statusBarColor: "black",
-        }} />
       <Stack.Screen
         name="HomeScreen"
         component={HomeScreen}
@@ -23,9 +19,21 @@ export default function MainStack() {
           statusBarColor: "black",
         }}
       />
+      <Stack.Screen
+        name="StoreScreen"
+        component={StoreScreen}
+        options={{
+          headerShown: false,
+          statusBarColor: "black",
+        }}
+      />
       <Stack.Screen name="LoginScreen" component={LoginScreen} />
       <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
-      <Stack.Screen name="DetailScreen" component={DetailScreen} options={{ headerShown:false}} />
+      <Stack.Screen
+        name="DetailScreen"
+        component={DetailScreen}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen name="MessageScreen" component={MessageScreen} />
       {/* <Stack.Screen name="SuccessScreen" component={SuccessScreen} options={{ headerShown:false}} /> */}
     </Stack.Navigator>
