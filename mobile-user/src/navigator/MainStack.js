@@ -6,12 +6,21 @@ import SignUpScreen from "../screens/SignUpScreen";
 import MessageScreen from "../screens/MessageScreen";
 import SuccessScreen from "../screens/SuccessScreen";
 import CartScreen from "../screens/CartScreen";
+import StoreScreen from "../screens/StoreScreen";
 
 const Stack = createNativeStackNavigator();
 
 export default function MainStack() {
   return (
     <Stack.Navigator>
+      <Stack.Screen
+        name="StoreScreen"
+        component={StoreScreen}
+        options={{
+          headerShown: false,
+          statusBarColor: "black",
+        }}
+      />
       <Stack.Screen
         name="HomeScreen"
         component={HomeScreen}

@@ -1,7 +1,13 @@
 import { Axios } from "../../helpers/axios";
-import { ADD_CART_FOOD, FOOD_FETCH_Detail, FOOD_FETCH_HOT_DEALS, MINUS_CART_FOOD, FOOD_FETCH_NEARBY } from "./actionTypes";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import {
+  ADD_CART_FOOD,
+  FOOD_FETCH_Detail,
+  FOOD_FETCH_HOT_DEALS,
+  MINUS_CART_FOOD,
+  FOOD_FETCH_NEARBY,
+  STORE_FETCH_DETAIL,
+} from "./actionTypes";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export function fetchHotDealsFood(payload) {
   return {
@@ -16,7 +22,6 @@ export function fetchDetailFood(payload) {
     payload,
   };
 }
-
 
 export function addCartFood(payload) {
   return {
@@ -38,6 +43,26 @@ export function fetchNearbyFood(payload) {
     payload,
   };
 }
+
+export function fetchStoreDetail(payload) {
+  return {
+    type: STORE_FETCH_DETAIL,
+    payload,
+  };
+}
+
+export const fetchDetailStore = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await Axios.get("/stores/1");
+      const action = fetchStoreDetail(data);
+      dispatch(action);
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+};
 
 export const fetchFoodHotDeals = () => {
   return async (dispatch) => {
@@ -112,12 +137,14 @@ export const fetchFoodNearby = (params) => {
   const longitude = params.coords.longitude;
   return async (dispatch) => {
     try {
-      const { data } = await Axios.get(`/foods?latitude=${latitude}&longitude=${longitude}`);
+      const { data } = await Axios.get(
+        `/foods?latitude=${latitude}&longitude=${longitude}`
+      );
       const action = fetchNearbyFood(data);
       dispatch(action);
     } catch (error) {
       console.log(error);
       throw error;
     }
-  }
-}
+  };
+};
