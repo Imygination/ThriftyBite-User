@@ -5,6 +5,7 @@ import LoginScreen from "../screens/LoginScreen";
 import SignUpScreen from "../screens/SignUpScreen";
 import MessageScreen from "../screens/MessageScreen";
 import SuccessScreen from "../screens/SuccessScreen";
+import CartScreen from "../screens/CartScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +24,7 @@ export default function MainStack() {
       <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
       <Stack.Screen name="DetailScreen" component={DetailScreen} options={{ headerShown:false}} />
       <Stack.Screen name="MessageScreen" component={MessageScreen} />
+      <Stack.Screen name="CartScreen" component={CartScreen} />
       {/* <Stack.Screen name="SuccessScreen" component={SuccessScreen} options={{ headerShown:false}} /> */}
     </Stack.Navigator>
   );

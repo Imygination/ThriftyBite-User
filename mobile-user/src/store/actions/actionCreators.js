@@ -1,5 +1,5 @@
 import { Axios } from "../../helpers/axios";
-import { FOOD_FETCH_Detail, FOOD_FETCH_HOT_DEALS } from "./actionTypes";
+import { ADD_CART_FOOD, FOOD_FETCH_Detail, FOOD_FETCH_HOT_DEALS, MINUS_CART_FOOD } from "./actionTypes";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export function fetchHotDealsFood(payload) {
@@ -12,6 +12,20 @@ export function fetchHotDealsFood(payload) {
 export function fetchDetailFood(payload) {
   return {
     type: FOOD_FETCH_Detail,
+    payload,
+  };
+}
+
+export function addCartFood(payload) {
+  return {
+    type: ADD_CART_FOOD,
+    payload,
+  };
+}
+
+export function minusCartFood(payload) {
+  return {
+    type: MINUS_CART_FOOD,
     payload,
   };
 }
@@ -83,3 +97,16 @@ export const registerSeller = (body) => {
         }
     }
 }
+
+// export const fetchCartFood = (data) => {
+//   return async (dispatch) => {
+//     try {
+//       const {data} = await Axios.get("/foods");
+//       const action = fetchHotDealsFood(data);
+//       dispatch(action);
+//     } catch (error) {
+//       console.log(error);
+//       throw error;
+//     }
+//   };
+// };
