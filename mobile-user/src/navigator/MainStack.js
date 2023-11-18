@@ -6,6 +6,8 @@ import SignUpScreen from "../screens/SignUpScreen";
 import MessageScreen from "../screens/MessageScreen";
 import StoreScreen from "../screens/StoreScreen";
 import SuccessScreen from "../screens/SuccessScreen";
+import CartScreen from "../screens/CartScreen";
+
 const Stack = createNativeStackNavigator();
 
 export default function MainStack() {
@@ -35,6 +37,7 @@ export default function MainStack() {
         options={{ headerShown: false }}
       />
       <Stack.Screen name="MessageScreen" component={MessageScreen} />
+      <Stack.Screen name="CartScreen" component={CartScreen} />
       {/* <Stack.Screen name="SuccessScreen" component={SuccessScreen} options={{ headerShown:false}} /> */}
     </Stack.Navigator>
   );

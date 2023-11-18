@@ -17,7 +17,7 @@ function SignUpScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [role, setRole] = useState("seller")
+  const [role, setRole] = useState("user")
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch()
   const handleSignUp = () => {

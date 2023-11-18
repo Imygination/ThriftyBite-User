@@ -134,7 +134,7 @@ export default function HomeScreen({ navigation }) {
               <TouchableHighlight
                 activeOpacity={0.7}
                 underlayColor="white"
-                onPress={() => navigation.navigate("LoginScreen", { id: 123 })}
+                onPress={() => navigation.navigate("CartScreen", { id: 123 })}
                 style={{ flex: 1, height: 16, width: 16 }}
               >
                 <Image

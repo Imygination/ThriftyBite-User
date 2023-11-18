@@ -15,4 +15,9 @@ export default StyleSheet.create({
     shadowRadius: 5.62,
     elevation: 9,
   },
+  tableCell: {
+    flex: 1,
+    alignItems: "center",
+    height: "100%",
+  },
 });
