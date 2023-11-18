@@ -4,7 +4,7 @@ import {
   FOOD_FETCH_Detail,
   FOOD_FETCH_HOT_DEALS,
   MINUS_CART_FOOD,
-  FOOD_FETCH_NEARBY,
+  STORE_FETCH_NEARBY,
   STORE_FETCH_DETAIL,
 } from "./actionTypes";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -39,7 +39,7 @@ export function minusCartFood(payload) {
 
 export function fetchNearbyFood(payload) {
   return {
-    type: FOOD_FETCH_NEARBY,
+    type: STORE_FETCH_NEARBY,
     payload,
   };
 }

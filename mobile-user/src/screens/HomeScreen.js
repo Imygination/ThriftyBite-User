@@ -33,7 +33,7 @@ export default function HomeScreen({ navigation }) {
     return state.foodReducer.hotDealsFood;
   });
   const nearbyStore = useSelector((state) => {
-      return state.foodReducer.storesNearby
+      return state.storeReducer.storesNearby
   })
   useEffect(() => {
     setLoading(true);
