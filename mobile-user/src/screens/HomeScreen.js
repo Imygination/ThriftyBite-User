@@ -25,6 +25,7 @@ export default function HomeScreen({ navigation }) {
   const [token, setToken] = useState("");
   const [loading, setLoading] = useState(true);
   const [userLocation, setUserLocation] = useState(null);
+  const [nearbyStore, setNearbyStore] = useState([])
   const dispatch = useDispatch();
   const foods = useSelector(function (state) {
     return state.foodReducer.hotDealsFood;

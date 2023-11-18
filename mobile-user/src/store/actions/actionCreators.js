@@ -137,9 +137,12 @@ export const fetchFoodNearby = (params) => {
   const longitude = params.coords.longitude;
   return async (dispatch) => {
     try {
-      const { data } = await Axios.get(
-        `/foods?latitude=${latitude}&longitude=${longitude}`
-      );
+      const { data } = await Axios.get(`/stores`, {
+        params: {
+          longitude,
+          latitude
+        }
+      });
       const action = fetchNearbyFood(data);
       dispatch(action);
     } catch (error) {
