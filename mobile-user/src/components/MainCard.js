@@ -8,6 +8,7 @@ import {
   addCartFood,
   minusCartFood,
 } from "../store/actions/actionCreators";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function MainCard(props) {
   const dispatch = useDispatch();
@@ -15,18 +16,27 @@ export default function MainCard(props) {
   if (!food || food.length === 0) {
     return null;
   }
-  const addCartHandler = () => {
-    console.log("Add to Cart...");
-    const cartData = {
-      foodId: food.id,
-      name: food.name,
-      imageUrl: food.imageUrl,
-      count: 1,
-      price: food.price,
-      itemPrice: food.price,
-    };
-    dispatch(addCartFood(cartData));
-    // console.log(cartData);
+  const addCartHandler = async () => {
+    try {
+      const token = await AsyncStorage.getItem("access_token");
+      if (!token) {
+        navigation.navigate("LoginScreen");
+        throw new Error("Need Login First...");
+      }
+      console.log("Add to Cart...");
+      const cartData = {
+        foodId: food.id,
+        name: food.name,
+        imageUrl: food.imageUrl,
+        count: 1,
+        price: food.price,
+        itemPrice: food.price,
+      };
+      dispatch(addCartFood(cartData));
+      // console.log(cartData);
+    } catch (error) {
+      console.log(error);
+    }
   };
   const navigation = useNavigation();
   const { width, height } = Dimensions.get("window");

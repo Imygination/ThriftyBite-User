@@ -19,8 +19,10 @@ import {
 } from "../store/actions/actionCreators";
 import { ActivityIndicator } from "react-native";
 import * as Location from "expo-location";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function HomeScreen({ navigation }) {
+  const [token, setToken] = useState("");
   const [loading, setLoading] = useState(true);
   const [userLocation, setUserLocation] = useState(null);
   const dispatch = useDispatch();
@@ -30,6 +32,9 @@ export default function HomeScreen({ navigation }) {
 
   useEffect(() => {
     setLoading(true);
+    AsyncStorage.getItem("access_token").then((result) => {
+      setToken(result);
+    });
     const getPermission = async () => {
       try {
         let { status } = await Location.requestForegroundPermissionsAsync();
@@ -54,6 +59,10 @@ export default function HomeScreen({ navigation }) {
   if (!userLocation) {
     return <ActivityIndicator size="large" color="#5db075" />;
   }
+
+  const logoutHandler = async () => {
+    await AsyncStorage.clear();
+  };
   const actions = [
     {
       text: "Accessibility",
@@ -119,18 +128,33 @@ export default function HomeScreen({ navigation }) {
                 marginTop: 15,
               }}
             >
-              <TouchableHighlight
-                activeOpacity={0.7}
-                underlayColor="white"
-                onPress={() => navigation.navigate("LoginScreen", { id: 123 })}
-                style={{ flex: 1, height: 20, width: 20, marginRight: 250 }}
-              >
-                <Image
-                  source={require("../../assets/Login.png")}
-                  resizeMode="contain"
-                  style={{ flex: 1 }}
-                />
-              </TouchableHighlight>
+              {!token ? (
+                <TouchableHighlight
+                  activeOpacity={0.7}
+                  underlayColor="white"
+                  onPress={() => navigation.navigate("LoginScreen")}
+                  style={{ flex: 1, height: 20, width: 20, marginRight: 250 }}
+                >
+                  <Image
+                    source={require("../../assets/Login.png")}
+                    resizeMode="contain"
+                    style={{ flex: 1 }}
+                  />
+                </TouchableHighlight>
+              ) : (
+                <TouchableHighlight
+                  activeOpacity={0.7}
+                  underlayColor="white"
+                  onPress={logoutHandler}
+                  style={{ flex: 1, height: 20, width: 20, marginRight: 250 }}
+                >
+                  <Image
+                    source={require("../../assets/Logout.png")}
+                    resizeMode="contain"
+                    style={{ flex: 1, marginLeft: 10 }}
+                  />
+                </TouchableHighlight>
+              )}
               <TouchableHighlight
                 activeOpacity={0.7}
                 underlayColor="white"
