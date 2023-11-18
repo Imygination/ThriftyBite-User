@@ -14,16 +14,16 @@ export default function MainStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="StoreScreen"
-        component={StoreScreen}
+        name="HomeScreen"
+        component={HomeScreen}
         options={{
           headerShown: false,
           statusBarColor: "black",
         }}
       />
       <Stack.Screen
-        name="HomeScreen"
-        component={HomeScreen}
+        name="StoreScreen"
+        component={StoreScreen}
         options={{
           headerShown: false,
           statusBarColor: "black",

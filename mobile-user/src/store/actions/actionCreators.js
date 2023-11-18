@@ -148,3 +148,27 @@ export const fetchFoodNearby = (params) => {
     }
   };
 };
+
+export const fetchOrder = (orderList) => {
+  return async (dispatch) => {
+    try {
+      if (!orderList) {
+        throw new Error("Order List Empty");
+      }
+      const token = await AsyncStorage.getItem("access_token");
+      const { data } = await Axios.post(
+        "/orders",
+        { orderList },
+        {
+          headers: {
+            access_token: token,
+          },
+        }
+      );
+      console.log(data);
+      console.log("Success Fetch Order...");
+    } catch (error) {
+      console.log(error.response.data);
+    }
+  };
+};
