@@ -13,28 +13,47 @@ import MainCard from "../components/MainCard";
 import { FloatingAction } from "react-native-floating-action";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { fetchFoodHotDeals } from "../store/actions/actionCreators";
+import {
+  fetchFoodHotDeals,
+  fetchFoodNearby,
+} from "../store/actions/actionCreators";
 import { ActivityIndicator } from "react-native";
+import * as Location from "expo-location";
 
 export default function HomeScreen({ navigation }) {
   const [loading, setLoading] = useState(true);
+  const [userLocation, setUserLocation] = useState(null);
   const dispatch = useDispatch();
   const foods = useSelector(function (state) {
     return state.foodReducer.hotDealsFood;
   });
 
   useEffect(() => {
-    setLoading(true)
-        dispatch(fetchFoodHotDeals())
-        .catch((err) => {
-          console.log(err);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-  }, []);
-  
+    setLoading(true);
+    const getPermission = async () => {
+      try {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== "granted") {
+          console.log("Location permission not granted");
+          return;
+        }
 
+        let currentLocation = await Location.getCurrentPositionAsync({});
+        setUserLocation(currentLocation);
+        dispatch(fetchFoodHotDeals());
+        dispatch(fetchFoodNearby(currentLocation));
+      } catch (error) {
+        console.error("Error getting location:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getPermission();
+  }, []);
+  if (!userLocation) {
+    return <ActivityIndicator size="large" color="#5db075" />;
+  }
   const actions = [
     {
       text: "Accessibility",
