@@ -5,6 +5,7 @@ import {
   FOOD_FETCH_HOT_DEALS,
   MINUS_CART_FOOD,
   FOOD_FETCH_NEARBY,
+  STORE_FETCH_DETAIL,
 } from "./actionTypes";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -42,6 +43,26 @@ export function fetchNearbyFood(payload) {
     payload,
   };
 }
+
+export function fetchStoreDetail(payload) {
+  return {
+    type: STORE_FETCH_DETAIL,
+    payload,
+  };
+}
+
+export const fetchDetailStore = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await Axios.get("/stores/1");
+      const action = fetchStoreDetail(data);
+      dispatch(action);
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+};
 
 export const fetchFoodHotDeals = () => {
   return async (dispatch) => {
