@@ -101,6 +101,7 @@ export const loginSeller = (body) => {
       }
       const { data } = await Axios.post("/login", body);
       await AsyncStorage.setItem("access_token", data.access_token);
+      await AsyncStorage.setItem("userId", JSON.stringify(data.userId));
     } catch (error) {
       console.log(error);
       throw error;
@@ -140,8 +141,8 @@ export const fetchFoodNearby = (params) => {
       const { data } = await Axios.get(`/stores/location`, {
         params: {
           longitude,
-          latitude
-        }
+          latitude,
+        },
       });
       const action = fetchNearbyFood(data);
       dispatch(action);
