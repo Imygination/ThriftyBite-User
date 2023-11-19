@@ -58,7 +58,7 @@ const StoreScreen = ({ navigation }) => {
         <View style={styles.storeInfoContainer}>
           <Text style={styles.storeInfoText}>{store.name}</Text>
           <Text style={styles.storeInfoAddress}>{store.address}</Text>
-          <ButtonChat data={StoreId}/>
+          <ButtonChat StoreId={StoreId}/>
         </View>
         {loading ? (
           <ActivityIndicator size="large" color="#5db075" />
