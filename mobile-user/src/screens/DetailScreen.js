@@ -8,9 +8,10 @@ import {
 } from "react-native";
 import { Button } from "@rneui/themed";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchFoodDetail } from "../store/actions/actionCreators";
+import { fetchFoodDetail, addCartFood } from "../store/actions/actionCreators";
 import { useEffect } from "react";
 import MapView, { Marker } from 'react-native-maps';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function DetailScreen({route, navigation}) {
   
@@ -25,6 +26,31 @@ export default function DetailScreen({route, navigation}) {
   if (!detailFood || detailFood.length === 0) {
     return null;
   }
+
+  const addCartHandler = async () => {
+    try {
+      console.log("add cart")
+      const token = await AsyncStorage.getItem("access_token");
+      if (!token) {
+        navigation.navigate("LoginScreen");
+        throw new Error("Need Login First...");
+      }
+      console.log("Add to Cart...");
+      const cartData = {
+        foodId: detailFood.id,
+        name: detailFood.name,
+        imageUrl: detailFood.imageUrl,
+        count: 1,
+        price: detailFood.price,
+        itemPrice: detailFood.price,
+      };
+      console.log(cartData);
+      dispatch(addCartFood(cartData));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const { width, height } = Dimensions.get("window");
   return (
     <View style={{ width: 400, height: height * 0.9, padding: 20 , marginTop:5}}>
@@ -119,6 +145,7 @@ export default function DetailScreen({route, navigation}) {
             <Button
               title="Order"
               color="#5db075"
+              onPress={addCartHandler}
               buttonStyle={{
                 backgroundColor: "#5db075",
                 borderWidth: 2,

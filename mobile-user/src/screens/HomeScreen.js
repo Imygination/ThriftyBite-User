@@ -18,18 +18,23 @@ import {
   fetchFoodNearby,
 } from "../store/actions/actionCreators";
 import { ActivityIndicator } from "react-native";
+import StoreCard from "../components/StoreCard";
 import * as Location from "expo-location";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import store from "../store";
 
 export default function HomeScreen({ navigation }) {
   const [token, setToken] = useState("");
   const [loading, setLoading] = useState(true);
   const [userLocation, setUserLocation] = useState(null);
+  // const [nearbyStore, setNearbyStore] = useState(["","","","","","","","",])
   const dispatch = useDispatch();
   const foods = useSelector(function (state) {
     return state.foodReducer.hotDealsFood;
   });
-
+  const nearbyStore = useSelector((state) => {
+      return state.storeReducer.storesNearby
+  })
   useEffect(() => {
     setLoading(true);
     AsyncStorage.getItem("access_token").then((result) => {
@@ -51,9 +56,10 @@ export default function HomeScreen({ navigation }) {
         console.error("Error getting location:", error);
       } finally {
         setLoading(false);
+        // setNearbyStore(store.getState().foodReducer.storesNearby)
       }
     };
-
+    
     getPermission();
   }, []);
   if (!userLocation) {
@@ -196,12 +202,15 @@ export default function HomeScreen({ navigation }) {
             marginTop: 10,
           }}
         >
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            <MainCard />
-            <MainCard />
-            <MainCard />
-            <MainCard />
-            <MainCard />
+          <ScrollView horizontal>
+            {nearbyStore.map((el, index) => {
+                return (
+                  <StoreCard
+                  store={el}
+                  key={index}
+                  />
+                )
+            })}
           </ScrollView>
         </View>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>

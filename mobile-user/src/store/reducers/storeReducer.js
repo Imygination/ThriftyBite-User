@@ -1,7 +1,8 @@
-import { STORE_FETCH_DETAIL } from "../actions/actionTypes";
+import { STORE_FETCH_DETAIL, STORE_FETCH_NEARBY } from "../actions/actionTypes";
 
 const initialState = {
-    storeDetail: ""
+    storeDetail: "",
+    storesNearby: []
 };
 
 export default function storeReducer(state = initialState, action) {
@@ -9,6 +10,12 @@ export default function storeReducer(state = initialState, action) {
     return {
       ...state,
       storeDetail: action.payload,
+    }
+  }
+  if (action.type === STORE_FETCH_NEARBY) {
+    return {
+      ...state,
+      storesNearby: action.payload,
     }
   }
   return state;
