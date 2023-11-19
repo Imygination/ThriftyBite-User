@@ -10,14 +10,16 @@ import MapView, { Marker } from "react-native-maps";
 import StoreTable from "../components/StoreTable";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchDetailStore } from "../store/actions/actionCreators";
+import { useRoute } from "@react-navigation/native";
 
 const StoreScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
+  const {StoreId} = useRoute().params
   const dispatch = useDispatch();
   useEffect(() => {
     setLoading(true);
     try {
-      dispatch(fetchDetailStore());
+      dispatch(fetchDetailStore(StoreId));
     } catch (error) {
       console.error("Error getting location:", error);
     } finally {

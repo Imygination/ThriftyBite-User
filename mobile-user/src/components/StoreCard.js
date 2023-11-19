@@ -1,8 +1,15 @@
 import { View, Image, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+
 function StoreCard(props) {
     const {store} = props
+    const navigate = useNavigation()
     return (
-        <TouchableOpacity>
+        <TouchableOpacity
+        onPress={() => {
+            navigate.navigate("StoreScreen", {StoreId: store.id})
+        }}
+        >
             <View style={styles.storeCard}>
                 <View style={styles.imageBackground}>
                     <Image 

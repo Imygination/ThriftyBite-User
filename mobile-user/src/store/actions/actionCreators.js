@@ -51,10 +51,10 @@ export function fetchStoreDetail(payload) {
   };
 }
 
-export const fetchDetailStore = () => {
+export const fetchDetailStore = (id) => {
   return async (dispatch) => {
     try {
-      const { data } = await Axios.get("/stores/1");
+      const { data } = await Axios.get(`/stores/${id}`);
       const action = fetchStoreDetail(data);
       dispatch(action);
     } catch (error) {
