@@ -12,6 +12,7 @@ import { fetchFoodDetail, addCartFood } from "../store/actions/actionCreators";
 import { useEffect } from "react";
 import MapView, { Marker } from 'react-native-maps';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import ButtonChat from "../components/ButtonChat";
 
 export default function DetailScreen({route, navigation}) {
   
@@ -50,6 +51,7 @@ export default function DetailScreen({route, navigation}) {
       console.log(error);
     }
   };
+
 
   const { width, height } = Dimensions.get("window");
   return (
@@ -135,13 +137,16 @@ export default function DetailScreen({route, navigation}) {
         </MapView>
           <View
             style={{
-              marginTop: 10,
+              marginTop: 20,
               width: 200,
               flex: 1,
               alignItems: "center",
               justifyContent: "center",
             }}
           >
+
+            <ButtonChat StoreId={detailFood.Store.id}/>
+            
             <Button
               title="Order"
               color="#5db075"

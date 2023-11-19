@@ -11,10 +11,11 @@ import StoreTable from "../components/StoreTable";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchDetailStore } from "../store/actions/actionCreators";
 import { useRoute } from "@react-navigation/native";
+import ButtonChat from "../components/ButtonChat";
 
 const StoreScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
-  const {StoreId} = useRoute().params
+  const { StoreId } = useRoute().params;
   const dispatch = useDispatch();
   useEffect(() => {
     setLoading(true);
@@ -51,12 +52,13 @@ const StoreScreen = ({ navigation }) => {
               latitude: store.location.coordinates[1],
               longitude: store.location.coordinates[0],
             }}
-            title="Andika Store"
+            title={store.name}
           />
         </MapView>
         <View style={styles.storeInfoContainer}>
           <Text style={styles.storeInfoText}>{store.name}</Text>
           <Text style={styles.storeInfoAddress}>{store.address}</Text>
+          <ButtonChat StoreId={StoreId}/>
         </View>
         {loading ? (
           <ActivityIndicator size="large" color="#5db075" />

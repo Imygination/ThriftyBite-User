@@ -131,15 +131,15 @@ export default function HomeScreen({ navigation }) {
                 flex: 1,
                 flexDirection: "row",
                 alignContent: "space-between",
-                marginTop: 15,
+                marginTop: 10,
               }}
             >
               {!token ? (
                 <TouchableHighlight
-                  activeOpacity={0.7}
-                  underlayColor="white"
+                  activeOpacity={0.4}
+                  underlayColor="transparant"
                   onPress={() => navigation.navigate("LoginScreen")}
-                  style={{ flex: 1, height: 20, width: 20, marginRight: 250 }}
+                  style={{ flex: 1, height: 20, width: 20, marginRight: 250, marginTop:5 }}
                 >
                   <Image
                     source={require("../../assets/Login.png")}
@@ -149,10 +149,10 @@ export default function HomeScreen({ navigation }) {
                 </TouchableHighlight>
               ) : (
                 <TouchableHighlight
-                  activeOpacity={0.7}
-                  underlayColor="white"
+                  activeOpacity={0.9}
+                  underlayColor="transparant"
                   onPress={logoutHandler}
-                  style={{ flex: 1, height: 20, width: 20, marginRight: 250 }}
+                  style={{ flex: 1, height: 20, width: 20, marginRight: 250, marginTop:5 }}
                 >
                   <Image
                     source={require("../../assets/Logout.png")}
@@ -162,13 +162,13 @@ export default function HomeScreen({ navigation }) {
                 </TouchableHighlight>
               )}
               <TouchableHighlight
-                activeOpacity={0.7}
-                underlayColor="white"
-                onPress={() => navigation.navigate("CartScreen", { id: 123 })}
-                style={{ flex: 1, height: 16, width: 16 }}
+                activeOpacity={0.5}
+                underlayColor="transparant"
+                onPress={() => navigation.navigate("CartScreen")}
+                style={{ flex: 1, height: 50, width: 50, paddingLeft:70, paddingBottom:20 }}
               >
                 <Image
-                  source={require("../../assets/Profile.png")}
+                  source={require("../../assets/cart.png")}
                   resizeMode="contain"
                   style={{ flex: 1 }}
                 />

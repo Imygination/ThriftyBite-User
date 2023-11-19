@@ -31,9 +31,27 @@ export default function MainStack() {
       />
       <Stack.Screen name="LoginScreen" component={LoginScreen} />
       <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
-      <Stack.Screen name="DetailScreen" component={DetailScreen} options={{ headerShown:false}} />
-      <Stack.Screen name="MessageScreen" component={MessageScreen} />
-      <Stack.Screen name="CartScreen" component={CartScreen} />
+      <Stack.Screen
+        name="DetailScreen"
+        component={DetailScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="MessageScreen"
+        component={MessageScreen}
+        options={{
+          title: "Chat Penjual",
+          headerTitleAlign:"center"
+        }}
+      />
+      <Stack.Screen
+        name="CartScreen"
+        component={CartScreen}
+        options={{
+          title: "Cart",
+          headerTitleAlign:"center"
+        }}
+      />
       {/* <Stack.Screen name="SuccessScreen" component={SuccessScreen} options={{ headerShown:false}} /> */}
     </Stack.Navigator>
   );
