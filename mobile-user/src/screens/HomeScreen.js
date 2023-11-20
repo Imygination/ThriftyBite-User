@@ -26,14 +26,31 @@ export default function HomeScreen({ navigation }) {
   const [token, setToken] = useState("");
   const [loading, setLoading] = useState(true);
   const [userLocation, setUserLocation] = useState(null);
+  const [search, setSearch] = useState("");
   // const [nearbyStore, setNearbyStore] = useState(["","","","","","","","",])
   const dispatch = useDispatch();
   const foods = useSelector(function (state) {
     return state.foodReducer.hotDealsFood;
   });
   const nearbyStore = useSelector((state) => {
-      return state.storeReducer.storesNearby
-  })
+    return state.storeReducer.storesNearby;
+  });
+
+  const onChangeSearch = (query) => {
+    setSearch(query);
+    // console.log("Search submitted:", search);
+  };
+
+  const submitHandler = () => {
+    dispatch(fetchFoodHotDeals(search));
+  };
+
+  const resetHandler = () => {
+    setSearch("");
+    // console.log("Search submitted:", search);
+    dispatch(fetchFoodHotDeals(""));
+  };
+
   useEffect(() => {
     setLoading(true);
     AsyncStorage.getItem("access_token").then((result) => {
@@ -49,7 +66,7 @@ export default function HomeScreen({ navigation }) {
 
         let currentLocation = await Location.getCurrentPositionAsync({});
         setUserLocation(currentLocation);
-        dispatch(fetchFoodHotDeals());
+        dispatch(fetchFoodHotDeals(search));
         dispatch(fetchFoodNearby(currentLocation));
       } catch (error) {
         console.error("Error getting location:", error);
@@ -58,7 +75,7 @@ export default function HomeScreen({ navigation }) {
         // setNearbyStore(store.getState().foodReducer.storesNearby)
       }
     };
-    
+
     getPermission();
   }, []);
   if (!userLocation) {
@@ -97,7 +114,13 @@ export default function HomeScreen({ navigation }) {
                   activeOpacity={0.4}
                   underlayColor="transparant"
                   onPress={() => navigation.navigate("LoginScreen")}
-                  style={{ flex: 1, height: 20, width: 20, marginRight: 250, marginTop:5 }}
+                  style={{
+                    flex: 1,
+                    height: 20,
+                    width: 20,
+                    marginRight: 250,
+                    marginTop: 5,
+                  }}
                 >
                   <Image
                     source={require("../../assets/Login.png")}
@@ -110,7 +133,13 @@ export default function HomeScreen({ navigation }) {
                   activeOpacity={0.9}
                   underlayColor="transparant"
                   onPress={logoutHandler}
-                  style={{ flex: 1, height: 20, width: 20, marginRight: 250, marginTop:5 }}
+                  style={{
+                    flex: 1,
+                    height: 20,
+                    width: 20,
+                    marginRight: 250,
+                    marginTop: 5,
+                  }}
                 >
                   <Image
                     source={require("../../assets/Logout.png")}
@@ -123,7 +152,13 @@ export default function HomeScreen({ navigation }) {
                 activeOpacity={0.5}
                 underlayColor="transparant"
                 onPress={() => navigation.navigate("CartScreen")}
-                style={{ flex: 1, height: 50, width: 50, paddingLeft:70, paddingBottom:20 }}
+                style={{
+                  flex: 1,
+                  height: 50,
+                  width: 50,
+                  paddingLeft: 70,
+                  paddingBottom: 20,
+                }}
               >
                 <Image
                   source={require("../../assets/cart.png")}
@@ -146,6 +181,12 @@ export default function HomeScreen({ navigation }) {
           style={{ margin: 10, marginTop: 30, backgroundColor: "#5db075" }}
           placeholderTextColor={"white"}
           inputStyle={{ color: "white" }}
+          iconColor="white"
+          value={search}
+          onSubmitEditing={submitHandler}
+          onIconPress={submitHandler}
+          onChangeText={onChangeSearch}
+          onClearIconPress={resetHandler}
         />
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <Text variant="titleLarge" style={{ margin: 10, fontWeight: "900" }}>
@@ -162,12 +203,7 @@ export default function HomeScreen({ navigation }) {
         >
           <ScrollView horizontal>
             {nearbyStore.map((el, index) => {
-                return (
-                  <StoreCard
-                  store={el}
-                  key={index}
-                  />
-                )
+              return <StoreCard store={el} key={index} />;
             })}
           </ScrollView>
         </View>

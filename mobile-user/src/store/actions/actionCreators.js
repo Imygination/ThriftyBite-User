@@ -64,10 +64,10 @@ export const fetchDetailStore = (id) => {
   };
 };
 
-export const fetchFoodHotDeals = () => {
+export const fetchFoodHotDeals = (search) => {
   return async (dispatch) => {
     try {
-      const { data } = await Axios.get("/foods");
+      const { data } = await Axios.get("/foods", {params: {search}});
       const action = fetchHotDealsFood(data);
       dispatch(action);
     } catch (error) {
