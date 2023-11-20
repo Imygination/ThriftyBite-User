@@ -87,6 +87,7 @@ export default function CartScreen({ route, navigation }) {
       });
       console.log(data);
       console.log("Success Fetch Order...");
+      navigation.navigate('MidtransScreen', { URI: data.redirect_url });
     } catch (error) {
       console.log(error.response.data);
     }
