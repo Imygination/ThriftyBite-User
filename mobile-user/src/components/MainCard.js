@@ -2,13 +2,15 @@ import { Dimensions, Image, TouchableHighlight, View } from "react-native";
 import { Button, Text } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import utility from "../style/utility,";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   fetchCartFood,
   addCartFood,
   minusCartFood,
 } from "../store/actions/actionCreators";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect, useState } from "react";
+import store from "../store";
 
 export default function MainCard(props) {
   const dispatch = useDispatch();
@@ -16,8 +18,16 @@ export default function MainCard(props) {
   if (!food || food.length === 0) {
     return null;
   }
+  // const cart = useSelector(function (state) {
+  //   return state.cartReducer.cart;
+  // });
+  const [cartCount, setCartCount] = useState(0);
+  const [cart, setCart] = useState([]);
+  const [counter, setCounter] = useState(0);
+
   const addCartHandler = async () => {
     try {
+      setCounter(counter + 1);
       const token = await AsyncStorage.getItem("access_token");
       if (!token) {
         navigation.navigate("LoginScreen");
@@ -29,15 +39,28 @@ export default function MainCard(props) {
         name: food.name,
         imageUrl: food.imageUrl,
         count: 1,
+        stock: food.stock,
         price: food.price,
         itemPrice: food.price,
       };
       dispatch(addCartFood(cartData));
-      // console.log(cartData);
+
+      const found = cart.findIndex((element) => element.foodId === food.id);
+      setCartCount(cart[found].count);
+      console.log(cart, cart.stock, counter);
+      
     } catch (error) {
       console.log(error);
     }
   };
+  useEffect(() => {
+    setCart(store.getState().cartReducer.cart);
+  }, [counter]);
+
+  useEffect(() => {
+    setCart(store.getState().cartReducer.cart);
+  }, []);
+
   const navigation = useNavigation();
   const { width, height } = Dimensions.get("window");
   return (
@@ -82,6 +105,7 @@ export default function MainCard(props) {
             mode="contained"
             buttonColor="#5db075"
             onPress={addCartHandler}
+            // disabled={cartCount >= food.stock ? true : false}
           >
             <Text style={{ color: "white", fontSize: 10 }}>+ Keranjang</Text>
           </Button>

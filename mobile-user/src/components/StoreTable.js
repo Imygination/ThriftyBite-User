@@ -21,6 +21,7 @@ const StoreTable = (props) => {
         name: food.name,
         imageUrl: food.imageUrl,
         count: 1,
+        stock: food.stock,
         price: food.price,
         itemPrice: food.price,
       };

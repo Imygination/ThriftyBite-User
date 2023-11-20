@@ -42,6 +42,7 @@ export default function DetailScreen({route, navigation}) {
         name: detailFood.name,
         imageUrl: detailFood.imageUrl,
         count: 1,
+        stock: detailFood.stock,
         price: detailFood.price,
         itemPrice: detailFood.price,
       };

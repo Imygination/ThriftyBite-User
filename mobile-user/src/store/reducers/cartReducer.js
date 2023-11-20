@@ -10,8 +10,11 @@ export default function cartReducer(state = initialState, action) {
       (element) => element.foodId === action.payload.foodId
     );
     if (found > -1) {
-      state.cart[found].count++;
-      state.cart[found].price += state.cart[found].itemPrice;
+      // console.log(state.cart[found].count, state.cart[found].stock);
+      if (state.cart[found].count < state.cart[found].stock) {
+        state.cart[found].count++;
+        state.cart[found].price += state.cart[found].itemPrice;
+      }
     } else {
       state.cart.push(action.payload);
     }
