@@ -12,6 +12,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchDetailStore } from "../store/actions/actionCreators";
 import { useRoute } from "@react-navigation/native";
 import ButtonChat from "../components/ButtonChat";
+import { Ionicons } from "@expo/vector-icons";
+
 
 const StoreScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
@@ -36,7 +38,18 @@ const StoreScreen = ({ navigation }) => {
   const foods = store.Food;
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      <Text onPress={() => navigation.goBack()}>Go Back</Text>
+      <Ionicons
+        name="md-chevron-back-circle"
+        size={40}
+        color="black"
+        style={{
+          position: "absolute",
+          zIndex: 99,
+          opacity: 0.4,
+          marginLeft: "5%",
+        }}
+        onPress={() => navigation.goBack()}
+      />
       <View style={styles.contentContainer}>
         <MapView
           style={styles.map}
@@ -58,7 +71,7 @@ const StoreScreen = ({ navigation }) => {
         <View style={styles.storeInfoContainer}>
           <Text style={styles.storeInfoText}>{store.name}</Text>
           <Text style={styles.storeInfoAddress}>{store.address}</Text>
-          <ButtonChat StoreId={StoreId}/>
+          <ButtonChat StoreId={StoreId} />
         </View>
         {loading ? (
           <ActivityIndicator size="large" color="#5db075" />
@@ -83,7 +96,7 @@ const styles = StyleSheet.create({
   map: {
     height: 150,
     width: "100%",
-    marginTop: 5,
+    marginTop: "7%",
   },
   storeInfoContainer: {
     marginTop: 5,

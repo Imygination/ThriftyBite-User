@@ -47,7 +47,6 @@ export default function MainCard(props) {
 
       const found = cart.findIndex((element) => element.foodId === food.id);
       setCartCount(cart[found].count);
-      console.log(cart, cart.stock, counter);
       
     } catch (error) {
       console.log(error);
