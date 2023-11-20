@@ -78,9 +78,6 @@ export default function HomeScreen({ navigation }) {
 
     getPermission();
   }, []);
-  if (!userLocation) {
-    return <ActivityIndicator size="large" color="#5db075" />;
-  }
 
   const logoutHandler = async () => {
     await AsyncStorage.clear();
