@@ -7,10 +7,9 @@ import {
   TouchableHighlight,
   View,
 } from "react-native";
-import { FAB, Searchbar, Text } from "react-native-paper";
+import { Searchbar, Text } from "react-native-paper";
 import utility from "../style/utility,";
 import MainCard from "../components/MainCard";
-import { FloatingAction } from "react-native-floating-action";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import {
@@ -69,50 +68,9 @@ export default function HomeScreen({ navigation }) {
   const logoutHandler = async () => {
     await AsyncStorage.clear();
   };
-  const actions = [
-    {
-      text: "Accessibility",
-      icon: require("../../assets/Login.png"),
-      name: "bt_accessibility",
-      position: 2,
-    },
-    // {
-    //   text: "Language",
-    //   icon: require("./images/ic_language_white.png"),
-    //   name: "bt_language",
-    //   position: 1
-    // },
-    // {
-    //   text: "Location",
-    //   icon: require("./images/ic_room_white.png"),
-    //   name: "bt_room",
-    //   position: 3
-    // },
-    // {
-    //   text: "Video",
-    //   icon: require("./images/ic_videocam_white.png"),
-    //   name: "bt_videocam",
-    //   position: 4
-    // }
-  ];
 
   return (
     <SafeAreaView style={utility.droidSafeArea}>
-      {/* <View
-        style={{ position: "absolute", zIndex: 1, height: 500, width: 300 }}
-      > */}
-      {/* <FloatingAction
-            actions={actions}
-            onPressItem={(name) => {
-              console.log(`selected button: ${name}`);
-            }}
-          /> */}
-      {/* <FAB
-          icon="plus"
-          style={styles.fab}
-          onPress={() => console.log("Pressed")}
-        /> */}
-      {/* </View> */}
       <ScrollView
         style={{ flex: 1, backgroundColor: "#E3EFEC", position: "relative" }}
       >

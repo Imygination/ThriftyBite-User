@@ -14,6 +14,9 @@ export default function CartScreen({ route, navigation }) {
   //   return state.cartReducer.cart;
   // });
   // console.log(cart);
+  const detailFood = useSelector(function (state) {
+    return state.foodReducer.foodDetail;
+  });
   const [cart, setCart] = React.useState([]);
 
   const [counter, setCounter] = React.useState(0);
@@ -31,6 +34,7 @@ export default function CartScreen({ route, navigation }) {
       name: food.name,
       imageUrl: food.imageUrl,
       count: 1,
+      stock: food.stock,
       price: food.price,
       itemPrice: food.price,
     };
@@ -130,6 +134,7 @@ export default function CartScreen({ route, navigation }) {
                     addCartHandler(item);
                     setCounter(counter + 1);
                   }}
+                  disabled={item.count >= item.stock ? true : false}
                 >
                   +
                 </Button>
