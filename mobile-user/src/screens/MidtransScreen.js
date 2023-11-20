@@ -1,10 +1,17 @@
 import React from 'react';
 import { WebView } from 'react-native-webview';
 
-const MidtransScreen = ({route}) => {
+const MidtransScreen = ({route,navigation}) => {
     const uri = route.params.URI
-    console.log(uri)
-    return <WebView source={{ uri: uri }} style={{ flex: 1 }} />;
+    
+    return <WebView 
+            source={{ uri: uri }} 
+            style={{ flex: 1 }} 
+            onNavigationStateChange={(navState) => {
+            if(navState.title == "Example Domain"){
+                navigation.navigate('HomeScreen')
+            }
+            }}/>;
 };
 
 export default MidtransScreen;
