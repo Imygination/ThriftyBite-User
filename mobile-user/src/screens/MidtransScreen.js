@@ -8,10 +8,10 @@ const MidtransScreen = ({route,navigation}) => {
             source={{ uri: uri }} 
             style={{ flex: 1 }} 
             onNavigationStateChange={(navState) => {
-            if(navState.title == "Example Domain"){
+            if(navState.loading && navState.canGoBack){
                 navigation.navigate('HomeScreen')
             }
             }}/>;
 };
 
-export default MidtransScreen;
+export default MidtransScreen;  
