@@ -63,7 +63,7 @@ export default function MainCard(props) {
   const navigation = useNavigation();
   const { width, height } = Dimensions.get("window");
   return (
-    <View style={{ width: width * 0.3, height: height * 0.3 }}>
+    <View style={{ width: width * 0.45, minHeight: 250 }}>
       <View
         style={[
           {
@@ -87,22 +87,22 @@ export default function MainCard(props) {
             source={{
               uri: food.imageUrl,
             }}
-            style={{ flex: 1, resizeMode: "contain" }}
+            style={{ width:'100%', height:150, resizeMode: "cover" }}
           />
         </TouchableHighlight>
         <View
           style={{
-            flex: 1,
             justifyContent: "flex-end",
             backgroundColor: "transparent",
             margin: 5,
           }}
         >
-          <Text>{food.name}</Text>
-          <Text variant="titleMedium">
+          <Text style={{color:'#1E241E',marginBottom:5}}>{food.name}</Text>
+          <Text style={{fontSize:15, color:'#1E241E', marginBottom:10}}>
             {food.price.toLocaleString("id-ID", {
               style: "currency",
               currency: "IDR",
+              maximumSignificantDigits: 6
             })}
           </Text>
           <Button
@@ -111,7 +111,7 @@ export default function MainCard(props) {
             onPress={addCartHandler}
             // disabled={cartCount >= food.stock ? true : false}
           >
-            <Text style={{ color: "white", fontSize: 10 }}>+ Keranjang</Text>
+            <Text style={{ color: "white", fontSize: 15 }}>+ Keranjang</Text>
           </Button>
         </View>
       </View>
