@@ -74,7 +74,7 @@ export default function DetailScreen({ route, navigation }) {
       </View>
       <View
         style={{
-          flex: 1,
+          flex: 2,
           backgroundColor: "#FAFFFA",
           paddingHorizontal: 10,
           marginBottom: 15,
@@ -177,7 +177,7 @@ export default function DetailScreen({ route, navigation }) {
       >
         <View
           style={{
-            flex: 0.7,
+            flex: 1.2,
             flexDirection: "row",
             alignItems: "center",
             borderBottomWidth: 2,
