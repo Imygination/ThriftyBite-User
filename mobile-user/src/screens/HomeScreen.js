@@ -53,9 +53,6 @@ export default function HomeScreen({ navigation }) {
 
   useEffect(() => {
     setLoading(true);
-    AsyncStorage.getItem("access_token").then((result) => {
-      setToken(result);
-    });
     const getPermission = async () => {
       try {
         let { status } = await Location.requestForegroundPermissionsAsync();
@@ -78,13 +75,27 @@ export default function HomeScreen({ navigation }) {
 
     getPermission();
   }, []);
-  if (!userLocation) {
-    return <ActivityIndicator size="large" color="#5db075" />;
-  }
 
   const logoutHandler = async () => {
     await AsyncStorage.clear();
+    setToken("");
   };
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      // This will be triggered when the screen comes into focus
+      // console.log("Screen is focused");
+      AsyncStorage.getItem("access_token").then((result) => {
+        setToken(result);
+      });
+      // Your additional logic here
+    });
+
+    // Clean up the event listener when the component is unmounted
+    return () => {
+      unsubscribe();
+    };
+  }, [navigation]);
 
   return (
     <SafeAreaView style={utility.droidSafeArea}>
