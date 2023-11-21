@@ -53,7 +53,7 @@ export default function MainStack() {
           headerTitleAlign:"center"
         }}
       />
-      {/* <Stack.Screen name="SuccessScreen" component={SuccessScreen} options={{ headerShown:false}} /> */}
+      <Stack.Screen name="SuccessScreen" component={SuccessScreen} options={{ headerShown:false}} />
       <Stack.Screen name="MidtransScreen" component={MidtransScreen} />
     </Stack.Navigator>
   );

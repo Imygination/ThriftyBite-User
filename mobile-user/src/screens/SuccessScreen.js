@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { Button } from "@rneui/themed";
 
-export default function SuccessScreen() {
+export default function SuccessScreen({navigation}) {
   const { width, height } = Dimensions.get("window");
   return (
     <View
@@ -62,7 +62,7 @@ export default function SuccessScreen() {
                 color: "#A9A9A9",
               }}
             >
-              Now go get your food
+              let's head to the store and enjoy your food!
             </Text>
             <View
               style={{
@@ -84,6 +84,7 @@ export default function SuccessScreen() {
               <Button
                 color="#5db075"
                 title="ok"
+                onPress={() => navigation.navigate("HomeScreen")}
                 buttonStyle={{
                   backgroundColor: "#5db075",
                   borderWidth: 2,
