@@ -1,4 +1,4 @@
-import { ADD_CART_FOOD, MINUS_CART_FOOD } from "../actions/actionTypes";
+import { ADD_CART_FOOD, MINUS_CART_FOOD, RESET_CART_FOOD } from "../actions/actionTypes";
 
 const initialState = {
   cart: [],
@@ -9,6 +9,12 @@ export default function cartReducer(state = initialState, action) {
     const found = state.cart.findIndex(
       (element) => element.foodId === action.payload.foodId
     );
+    if (state.cart.length > 0) {
+      if (state.cart[0].StoreId !== action.payload.StoreId) {
+        console.log("From different store")
+        throw {message: "Cannot add item from different store"}
+      }
+    }
     if (found > -1) {
       // console.log(state.cart[found].count, state.cart[found].stock);
       if (state.cart[found].count < state.cart[found].stock) {
@@ -32,6 +38,11 @@ export default function cartReducer(state = initialState, action) {
       state.cart.splice(found, 1);
     }
     console.log(found);
+  }
+
+  if (action.type === RESET_CART_FOOD) {
+    console.log("cart reset")
+    return {...state, cart: []}
   }
 
   return state;

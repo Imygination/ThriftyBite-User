@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button, DataTable, Text } from "react-native-paper";
 import * as React from "react";
 import { View } from "react-native";
-import { addCartFood, minusCartFood } from "../store/actions/actionCreators";
+import { addCartFood, minusCartFood, resetCart } from "../store/actions/actionCreators";
 import store from "../store";
 import utility from "../style/utility,";
 import { Axios } from "../helpers/axios";
@@ -87,6 +87,8 @@ export default function CartScreen({ route, navigation }) {
       });
       console.log(data);
       console.log("Success Fetch Order...");
+      dispatch(resetCart())
+      setCounter(counter + 1)
       navigation.navigate('MidtransScreen', { URI: data.redirect_url });
     } catch (error) {
       console.log(error.response.data);
@@ -120,7 +122,10 @@ export default function CartScreen({ route, navigation }) {
             </DataTable.Cell>
             <DataTable.Cell numeric>
               <View style={utility.tableCell}>
-                <Text>{item.price}</Text>
+                <Text>Rp. {item.price.toLocaleString({
+              style: "currency",
+              currency: "IDR",
+            })}</Text>
               </View>
             </DataTable.Cell>
             <DataTable.Cell numeric>
@@ -169,7 +174,10 @@ export default function CartScreen({ route, navigation }) {
         variant="titleLarge"
         style={{ textAlign: "center", marginTop: 20, color: "#5db075" }}
       >
-        TOTAL CART: {total}
+        TOTAL CART: Rp. {total.toLocaleString({
+              style: "currency",
+              currency: "IDR",
+            })}
       </Text>
       <Button
         mode="contained"
