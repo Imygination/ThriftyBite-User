@@ -1,12 +1,15 @@
 import React from "react";
-import { View, Image, Text, StyleSheet, Button } from "react-native";
+import { View, Image, Text, StyleSheet} from "react-native";
 import {addCartFood} from "../store/actions/actionCreators";
 import { useDispatch } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Button } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
 
 const StoreTable = (props) => {
   const food = props.foods;
   const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   const addCartHandler = async () => {
     try {
@@ -43,12 +46,21 @@ const StoreTable = (props) => {
       <View style={styles.textColumn}>
         <View style={styles.textFlexColumn}>
           <Text style={styles.foodName}>{food.name}</Text>
-          <Text style={styles.foodPrice}>Rp. {food.price}</Text>
+          <Text style={styles.foodPrice}>{food.price.toLocaleString("id-ID",{
+              style: "currency",
+              currency: "IDR",
+            })}</Text>
         </View>
         <View style={styles.buttonFlexColumn}>
-          <Button 
-          onPress={addCartHandler}
-          title="Order" color="#5db075" style={styles.orderButton} />
+        <Button
+            icon="cart"
+            mode="contained"
+            onPress={addCartHandler}
+            style={{ alignSelf: "auto"}}
+            buttonColor="#5db075"
+          >
+            Add Cart
+          </Button>
         </View>
       </View>
     </View>
@@ -87,6 +99,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignSelf: "flex-end",
     backgroundColor: "blue",
+    borderRadius: 10
   },
   textFlexColumn: {
     flex: 2,

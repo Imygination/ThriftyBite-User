@@ -22,7 +22,7 @@ export default function ButtonChat({ StoreId }) {
       icon="chat"
       mode="contained-tonal"
       onPress={() => chatHandler()}
-      buttonColor="#AAEFBC"
+      buttonColor="#C8D8D8"
     >
       Chat
     </Button>

@@ -1,6 +1,7 @@
 import {
   Image,
   ImageBackground,
+  RefreshControl,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -11,7 +12,7 @@ import { Searchbar, Text } from "react-native-paper";
 import utility from "../style/utility,";
 import MainCard from "../components/MainCard";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   fetchFoodHotDeals,
   fetchFoodNearby,
@@ -55,15 +56,14 @@ export default function HomeScreen({ navigation }) {
     setLoading(true);
     const getPermission = async () => {
       try {
+        dispatch(fetchFoodHotDeals(search));
         let { status } = await Location.requestForegroundPermissionsAsync();
         if (status !== "granted") {
           console.log("Location permission not granted");
           return;
         }
-
         let currentLocation = await Location.getCurrentPositionAsync({});
         setUserLocation(currentLocation);
-        dispatch(fetchFoodHotDeals(search));
         dispatch(fetchFoodNearby(currentLocation));
       } catch (error) {
         console.error("Error getting location:", error);
@@ -97,9 +97,45 @@ export default function HomeScreen({ navigation }) {
     };
   }, [navigation]);
 
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(async () => {
+    console.log("masuk");
+    setRefreshing(true);
+    try {
+      const timeOutHome = setTimeout(() => {
+        console.log("Reload Timeout...");
+        setLoading(false);
+        setRefreshing(false);
+      }, 10000);
+      let currentLocation = await Location.getCurrentPositionAsync({});
+      setUserLocation(currentLocation);
+      console.log(currentLocation);
+      dispatch(fetchFoodHotDeals(""))
+        .then(() => dispatch(fetchFoodNearby(currentLocation)))
+        .then(() => {
+          setRefreshing(false);
+          setLoading(false);
+        })
+        .then(() => clearTimeout(timeOutHome))
+        .catch((err) => {
+          clearTimeout(timeOutHome);
+          setLoading(false);
+          setRefreshing(false);
+          console.log(err);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
   return (
     <SafeAreaView style={utility.droidSafeArea}>
       <ScrollView
+        contentContainerStyle={styles.scrollView}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
         style={{ flex: 1, backgroundColor: "#E3EFEC", position: "relative" }}
       >
         <View
