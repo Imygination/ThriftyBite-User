@@ -1,12 +1,14 @@
 import React from "react";
-import { View, Image, Text, StyleSheet, Button } from "react-native";
+import { View, Image, Text, StyleSheet, Button, TouchableHighlight } from "react-native";
 import {addCartFood} from "../store/actions/actionCreators";
 import { useDispatch } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
 
 const StoreTable = (props) => {
   const food = props.foods;
   const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   const addCartHandler = async () => {
     try {
@@ -34,12 +36,19 @@ const StoreTable = (props) => {
 
   return (
     <View style={styles.container}>
+      <TouchableHighlight
+          activeOpacity={0.7}
+          underlayColor="white"
+          onPress={() => navigation.navigate("DetailScreen", { id: food.id })}
+          style={{ flex: 1 }}
+        >
       <Image
         source={{
           uri: food.imageUrl,
         }}
         style={styles.storeImage}
       />
+      </TouchableHighlight>
       <View style={styles.textColumn}>
         <View style={styles.textFlexColumn}>
           <Text style={styles.foodName}>{food.name}</Text>

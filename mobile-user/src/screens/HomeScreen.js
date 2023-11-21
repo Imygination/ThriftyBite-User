@@ -65,6 +65,7 @@ export default function HomeScreen({ navigation }) {
         }
 
         let currentLocation = await Location.getCurrentPositionAsync({});
+        console.log(currentLocation);
         setUserLocation(currentLocation);
         dispatch(fetchFoodHotDeals(search));
         dispatch(fetchFoodNearby(currentLocation));
@@ -78,9 +79,9 @@ export default function HomeScreen({ navigation }) {
 
     getPermission();
   }, []);
-  if (!userLocation) {
-    return <ActivityIndicator size="large" color="#5db075" />;
-  }
+  // if (!userLocation) {
+  //   return <ActivityIndicator size="large" color="#5db075" />;
+  // }
 
   const logoutHandler = async () => {
     await AsyncStorage.clear();
