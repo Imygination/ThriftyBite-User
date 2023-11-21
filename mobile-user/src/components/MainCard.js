@@ -47,7 +47,6 @@ export default function MainCard(props) {
 
       const found = cart.findIndex((element) => element.foodId === food.id);
       setCartCount(cart[found].count);
-      
     } catch (error) {
       console.log(error);
     }
@@ -99,7 +98,12 @@ export default function MainCard(props) {
           }}
         >
           <Text>{food.name}</Text>
-          <Text variant="titleMedium">Rp. {food.price}</Text>
+          <Text variant="titleMedium">
+            {food.price.toLocaleString("id-ID", {
+              style: "currency",
+              currency: "IDR",
+            })}
+          </Text>
           <Button
             mode="contained"
             buttonColor="#5db075"
