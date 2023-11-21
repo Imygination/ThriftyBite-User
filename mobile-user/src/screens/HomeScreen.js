@@ -6,6 +6,7 @@ import {
   ScrollView,
   StyleSheet,
   TouchableHighlight,
+  TouchableOpacity,
   View,
 } from "react-native";
 import { Searchbar, Text } from "react-native-paper";
@@ -223,9 +224,17 @@ export default function HomeScreen({ navigation }) {
             alignItems: "center",
           }}
         ></View>
+        <TouchableOpacity>
+          <Text 
+          style={styles.orderButton}
+          onPress={() => navigation.push("OrderHistoryScreen")}
+          >
+            Order History
+          </Text>
+        </TouchableOpacity>
         <Searchbar
           placeholder="Mau belanja apa?"
-          style={{ margin: 10, marginTop: 30, backgroundColor: "#5db075" }}
+          style={{ margin: 10, marginTop: 20, backgroundColor: "#5db075" }}
           placeholderTextColor={"white"}
           inputStyle={{ color: "white" }}
           iconColor="white"
@@ -286,4 +295,16 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
   },
+  orderButton: {
+    textAlign: 'center',
+    fontSize: 15,
+    backgroundColor: "#5db075",
+    width: 120,
+    padding: 10,
+    borderRadius: 50,
+    color:'white',
+    fontWeight: 'bold',
+    alignSelf: 'center',
+    marginTop: 10
+  }
 });
