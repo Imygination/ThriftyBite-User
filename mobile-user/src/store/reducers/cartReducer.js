@@ -1,7 +1,8 @@
-import { ADD_CART_FOOD, MINUS_CART_FOOD, RESET_CART_FOOD } from "../actions/actionTypes";
+import { ADD_CART_FOOD, MINUS_CART_FOOD, RESET_CART_FOOD, FETCH_CART_FOOD } from "../actions/actionTypes";
 
 const initialState = {
   cart: [],
+  cartByUser: [],
 };
 
 export default function cartReducer(state = initialState, action) {
@@ -45,5 +46,11 @@ export default function cartReducer(state = initialState, action) {
     return {...state, cart: []}
   }
 
+  if (action.type === FETCH_CART_FOOD) {
+    return {
+      ...state,
+      cartByUser: action.payload,
+    }
+  }
   return state;
 }
