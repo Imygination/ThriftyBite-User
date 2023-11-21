@@ -9,7 +9,7 @@ const MidtransScreen = ({route,navigation}) => {
             style={{ flex: 1 }} 
             onNavigationStateChange={(navState) => {
             if(navState.loading && navState.canGoBack){
-                navigation.navigate('HomeScreen')
+                navigation.navigate('SuccessScreen')
             }
             }}/>;
 };
