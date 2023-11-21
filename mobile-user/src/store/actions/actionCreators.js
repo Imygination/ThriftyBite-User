@@ -6,6 +6,7 @@ import {
   MINUS_CART_FOOD,
   STORE_FETCH_NEARBY,
   STORE_FETCH_DETAIL,
+  RESET_CART_FOOD,
 } from "./actionTypes";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -34,6 +35,12 @@ export function minusCartFood(payload) {
   return {
     type: MINUS_CART_FOOD,
     payload,
+  };
+}
+
+export function resetCart() {
+  return {
+    type: RESET_CART_FOOD
   };
 }
 

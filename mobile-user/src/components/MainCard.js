@@ -42,6 +42,7 @@ export default function MainCard(props) {
         stock: food.stock,
         price: food.price,
         itemPrice: food.price,
+        StoreId: food.StoreId
       };
       dispatch(addCartFood(cartData));
 
