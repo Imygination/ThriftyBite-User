@@ -23,6 +23,7 @@ import StoreCard from "../components/StoreCard";
 import * as Location from "expo-location";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import store from "../store";
+import ToastManager, { Toast } from 'toastify-react-native'
 
 export default function HomeScreen({ navigation }) {
   const [token, setToken] = useState("");
@@ -132,6 +133,11 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <SafeAreaView style={utility.droidSafeArea}>
+      <ToastManager 
+      width="90%"
+      height="50"
+      style={styles.toastify}
+      />
       <ScrollView
         contentContainerStyle={styles.scrollView}
         refreshControl={

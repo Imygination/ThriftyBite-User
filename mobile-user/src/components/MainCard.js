@@ -11,6 +11,7 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
 import store from "../store";
+import ToastManager, { Toast } from 'toastify-react-native'
 
 export default function MainCard(props) {
   const dispatch = useDispatch();
@@ -45,11 +46,12 @@ export default function MainCard(props) {
         StoreId: food.StoreId
       };
       dispatch(addCartFood(cartData));
-
+      Toast.success("Added to cart")
       const found = cart.findIndex((element) => element.foodId === food.id);
       setCartCount(cart[found].count);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      Toast.error(error.message)
     }
   };
   useEffect(() => {

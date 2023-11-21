@@ -37,6 +37,7 @@ export default function CartScreen({ route, navigation }) {
       stock: food.stock,
       price: food.price,
       itemPrice: food.price,
+      StoreId: food.StoreId
     };
     console.log(cartData);
     dispatch(addCartFood(cartData));
