@@ -97,7 +97,7 @@ export default function DetailScreen({ route, navigation }) {
             borderColor: "#3D8B52",
           }}
         >
-          <MaterialIcons name="food-bank" size={55} color="#1E241E" />
+          <MaterialIcons name="food-bank" size={55} color="#1E241E" style={{marginTop:15}} />
           <Text
             variant="displayLarge"
             style={{
