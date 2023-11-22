@@ -1,10 +1,11 @@
 import React from "react";
-import { View, Image, Text, StyleSheet} from "react-native";
+import { View, Image, Text, StyleSheet, TouchableOpacity} from "react-native";
 import {addCartFood} from "../store/actions/actionCreators";
 import { useDispatch } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Button } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
+import ToastManager, { Toast } from 'toastify-react-native'
 
 const StoreTable = (props) => {
   const food = props.foods;
@@ -30,20 +31,29 @@ const StoreTable = (props) => {
         StoreId: food.StoreId
       };
       dispatch(addCartFood(cartData));
+      Toast.success("Added to cart")
       // console.log(cartData);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      Toast.error(error.message)
     }
   };
 
   return (
     <View style={styles.container}>
-      <Image
-        source={{
-          uri: food.imageUrl,
-        }}
-        style={styles.storeImage}
-      />
+      <TouchableOpacity
+      onPress={() => navigation.navigate("DetailScreen", {id: food.id})}
+      style={{
+        width: "45%"
+      }}
+      >
+        <Image
+          source={{
+            uri: food.imageUrl,
+          }}
+          style={styles.storeImage}
+          />
+      </TouchableOpacity>
       <View style={styles.textColumn}>
         <View style={styles.textFlexColumn}>
           <Text style={styles.foodName}>{food.name}</Text>
@@ -78,9 +88,11 @@ const styles = StyleSheet.create({
   },
   storeImage: {
     flex: 1,
-    width: 125,
+    width: "100%",
     height: 125,
     borderRadius: 18,
+    resizeMode: "contain",
+    alignSelf: "center"
   },
   textColumn: {
     flex: 1,

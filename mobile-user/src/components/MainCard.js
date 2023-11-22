@@ -82,7 +82,7 @@ export default function MainCard(props) {
         <TouchableHighlight
           activeOpacity={0.7}
           underlayColor="white"
-          onPress={() => navigation.navigate("DetailScreen", { id: food.id })}
+          onPress={() => navigation.navigate("StoreScreen", { StoreId: food.StoreId })}
           style={{ flex: 1 }}
         >
           <Image

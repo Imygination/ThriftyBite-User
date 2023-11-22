@@ -135,7 +135,7 @@ export default function HomeScreen({ navigation }) {
     <SafeAreaView style={utility.droidSafeArea}>
       <ToastManager 
       width="90%"
-      height="50"
+      height="70"
       style={styles.toastify}
       />
       <ScrollView

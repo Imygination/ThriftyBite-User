@@ -13,7 +13,7 @@ import { fetchDetailStore } from "../store/actions/actionCreators";
 import { useRoute } from "@react-navigation/native";
 import ButtonChat from "../components/ButtonChat";
 import { Ionicons } from "@expo/vector-icons";
-
+import ToastManager, { Toast } from 'toastify-react-native'
 
 const StoreScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
@@ -38,6 +38,11 @@ const StoreScreen = ({ navigation }) => {
   const foods = store.Food;
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+      <ToastManager 
+      width="90%"
+      height="70"
+      style={styles.toastify}
+      />
       <Ionicons
         name="md-chevron-back-circle"
         size={40}
