@@ -9,7 +9,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Button, Text } from "react-native-paper";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import ToastManager, { Toast } from 'toastify-react-native'
+import ToastManager, { Toast } from "toastify-react-native";
+import { Entypo } from "@expo/vector-icons";
 
 export default function DetailScreen({ route, navigation }) {
   const id = +route.params.id;
@@ -40,24 +41,20 @@ export default function DetailScreen({ route, navigation }) {
         stock: detailFood.stock,
         price: detailFood.price,
         itemPrice: detailFood.price,
-        StoreId: detailFood.StoreId
+        StoreId: detailFood.StoreId,
       };
       dispatch(addCartFood(cartData));
-      Toast.success("Added to cart")
+      Toast.success("Added to cart");
     } catch (error) {
       // console.log(error);
-      Toast.error(error.message)
+      Toast.error(error.message);
     }
   };
 
   const { width, height } = Dimensions.get("window");
   return (
     <View style={{ flex: 1, backgroundColor: "#BEDBBE" }}>
-      <ToastManager 
-      width="90%"
-      height="50"
-      style={styles.toastify}
-      />
+      <ToastManager width="90%" height="50" style={styles.toastify} />
       <View style={{ flex: 2, backgroundColor: "white", marginBottom: 15 }}>
         <Ionicons
           name="md-chevron-back-circle"
@@ -97,7 +94,12 @@ export default function DetailScreen({ route, navigation }) {
             borderColor: "#3D8B52",
           }}
         >
-          <MaterialIcons name="food-bank" size={55} color="#1E241E" style={{marginTop:15}} />
+          <MaterialIcons
+            name="food-bank"
+            size={55}
+            color="#1E241E"
+            style={{ marginTop: 15 }}
+          />
           <Text
             variant="displayLarge"
             style={{
@@ -110,11 +112,11 @@ export default function DetailScreen({ route, navigation }) {
           >
             {detailFood.Store.name}
           </Text>
-          <View style={{alignSelf:"center", marginLeft:"5%"}}>
+          <View style={{ alignSelf: "center", marginLeft: "5%" }}>
             <ButtonChat StoreId={detailFood.Store.id} />
           </View>
         </View>
-        <View style={{ flex: 2, marginBottom:"5%" }}>
+        <View style={{ flex: 2, marginBottom: "5%" }}>
           <Text
             variant="titleMedium"
             style={{
@@ -125,14 +127,16 @@ export default function DetailScreen({ route, navigation }) {
           >
             {detailFood.name}
           </Text>
-          <Text variant="bodyMedium" style={{opacity:0.8}}>{detailFood.description}</Text>
+          <Text variant="bodyMedium" style={{ opacity: 0.8 }}>
+            {detailFood.description}
+          </Text>
           <Text
             variant="titleLarge"
             style={{
               paddingTop: 5,
               paddingBottom: 5,
               fontWeight: "bold",
-              fontSize:25,
+              fontSize: 25,
               color: "#C84D4D",
             }}
           >
@@ -149,31 +153,56 @@ export default function DetailScreen({ route, navigation }) {
             alignItems: "center",
           }}
         >
-          <MaterialCommunityIcons
-            name="food-fork-drink"
-            size={20}
-            color="#85926A"
-          />
-          <Text
-            variant="titleMedium"
-            style={{
-              paddingTop: 5,
-              paddingLeft: 10,
-              marginRight: "18%",
-              color: "#85926A",
-            }}
+          <View style={{ flex: 1, marginTop: "5%" }}>
+            <View style={{ flex: 1, flexDirection: "row" }}>
+              <MaterialCommunityIcons
+                name="food-fork-drink"
+                size={27}
+                color="#85926A"
+              />
+              <Text
+                variant="titleSmall"
+                style={{
+                  paddingTop: 8,
+                  paddingLeft: 10,
+                  marginRight: "18%",
+                  color: "#85926A",
+                }}
+              >
+                Stock : {detailFood.stock}
+              </Text>
+            </View>
+            <View style={{ flex: 1, flexDirection: "row" }}>
+              <Entypo name="stopwatch" size={24} color="darkred" />
+              <Text
+                variant="titleSmall"
+                style={{
+                  paddingTop: 5,
+                  paddingLeft: 10,
+                  marginRight: "18%",
+                  color: "darkred",
+                }}
+              >
+                Pick Up : 21.00 - 00.00
+              </Text>
+            </View>
+          </View>
+          <View
+            style={{ flex: 1, marginLeft: "10%", justifyContent: "center" }}
           >
-            Stock : {detailFood.stock}
-          </Text>
-          <Button
-            icon="cart"
-            mode="contained"
-            onPress={addCartHandler}
-            style={{ alignSelf: "auto", marginLeft: "5%", width:"50%" }}
-            buttonColor="#144444"
-          >
-            Add Cart
-          </Button>
+            <Text variant="titleSmall" style={{ color: "darkred" }}>
+              *Save this food, Just for Today !
+            </Text>
+            <Button
+              icon="cart"
+              mode="contained"
+              onPress={addCartHandler}
+              style={{ alignSelf: "auto", width: "90%" }}
+              buttonColor="#144444"
+            >
+              Add Cart
+            </Button>
+          </View>
         </View>
       </View>
       <View
