@@ -11,6 +11,7 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
 import store from "../store";
+import ToastManager, { Toast } from 'toastify-react-native'
 
 export default function MainCard(props) {
   const dispatch = useDispatch();
@@ -42,15 +43,15 @@ export default function MainCard(props) {
         stock: food.stock,
         price: food.price,
         itemPrice: food.price,
+        StoreId: food.StoreId
       };
       dispatch(addCartFood(cartData));
-
+      Toast.success("Added to cart")
       const found = cart.findIndex((element) => element.foodId === food.id);
       setCartCount(cart[found].count);
-      console.log(cart, cart.stock, counter);
-      
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      Toast.error(error.message)
     }
   };
   useEffect(() => {
@@ -64,7 +65,7 @@ export default function MainCard(props) {
   const navigation = useNavigation();
   const { width, height } = Dimensions.get("window");
   return (
-    <View style={{ width: width * 0.3, height: height * 0.3 }}>
+    <View style={{ width: width * 0.45, minHeight: 250 }}>
       <View
         style={[
           {
@@ -81,33 +82,38 @@ export default function MainCard(props) {
         <TouchableHighlight
           activeOpacity={0.7}
           underlayColor="white"
-          onPress={() => navigation.navigate("DetailScreen", { id: food.id })}
+          onPress={() => navigation.navigate("StoreScreen", { StoreId: food.StoreId })}
           style={{ flex: 1 }}
         >
           <Image
             source={{
               uri: food.imageUrl,
             }}
-            style={{ flex: 1, resizeMode: "contain" }}
+            style={{ width:'100%', height:150, resizeMode: "cover" }}
           />
         </TouchableHighlight>
         <View
           style={{
-            flex: 1,
             justifyContent: "flex-end",
             backgroundColor: "transparent",
             margin: 5,
           }}
         >
-          <Text>{food.name}</Text>
-          <Text variant="titleMedium">Rp. {food.price}</Text>
+          <Text style={{color:'#1E241E',marginBottom:5}}>{food.name}</Text>
+          <Text style={{fontSize:15, color:'#1E241E', marginBottom:10}}>
+            {food.price.toLocaleString("id-ID", {
+              style: "currency",
+              currency: "IDR",
+              maximumSignificantDigits: 6
+            })}
+          </Text>
           <Button
             mode="contained"
             buttonColor="#5db075"
             onPress={addCartHandler}
             // disabled={cartCount >= food.stock ? true : false}
           >
-            <Text style={{ color: "white", fontSize: 10 }}>+ Keranjang</Text>
+            <Text style={{ color: "white", fontSize: 15 }}>+ Keranjang</Text>
           </Button>
         </View>
       </View>

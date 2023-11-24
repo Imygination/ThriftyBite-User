@@ -6,6 +6,8 @@ import {
   MINUS_CART_FOOD,
   STORE_FETCH_NEARBY,
   STORE_FETCH_DETAIL,
+  RESET_CART_FOOD,
+  FETCH_CART_FOOD
 } from "./actionTypes";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -37,6 +39,12 @@ export function minusCartFood(payload) {
   };
 }
 
+export function resetCart() {
+  return {
+    type: RESET_CART_FOOD
+  };
+}
+
 export function fetchNearbyFood(payload) {
   return {
     type: STORE_FETCH_NEARBY,
@@ -47,6 +55,13 @@ export function fetchNearbyFood(payload) {
 export function fetchStoreDetail(payload) {
   return {
     type: STORE_FETCH_DETAIL,
+    payload,
+  };
+}
+
+export function fetchUserCart(payload) {
+  return {
+    type: FETCH_CART_FOOD,
     payload,
   };
 }
@@ -64,10 +79,10 @@ export const fetchDetailStore = (id) => {
   };
 };
 
-export const fetchFoodHotDeals = () => {
+export const fetchFoodHotDeals = (search) => {
   return async (dispatch) => {
     try {
-      const { data } = await Axios.get("/foods");
+      const { data } = await Axios.get("/foods", {params: {search}});
       const action = fetchHotDealsFood(data);
       dispatch(action);
     } catch (error) {
@@ -175,4 +190,25 @@ export const fetchOrder = (orderList) => {
       console.log(error.response.data);
     }
   };
-};
+}
+
+  export const fetchCartUser = () => {
+    return async (dispatch) => {
+      try {
+        const token = await AsyncStorage.getItem("access_token");
+        const { data } = await Axios.get(
+          "/orders",
+          {
+            headers: {
+              access_token: token,
+            },
+          }
+        );
+        const action = fetchUserCart(data);
+        dispatch(action);
+      } catch (error) {
+        console.log(error.response.data);
+      }
+    };
+}
+

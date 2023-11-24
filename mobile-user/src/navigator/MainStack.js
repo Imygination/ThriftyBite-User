@@ -7,6 +7,8 @@ import MessageScreen from "../screens/MessageScreen";
 import SuccessScreen from "../screens/SuccessScreen";
 import CartScreen from "../screens/CartScreen";
 import StoreScreen from "../screens/StoreScreen";
+import MidtransScreen from "../screens/MidtransScreen"
+import OrderHistoryScreen from "../screens/OrderHistoryScreen"
 
 const Stack = createNativeStackNavigator();
 
@@ -52,7 +54,9 @@ export default function MainStack() {
           headerTitleAlign:"center"
         }}
       />
-      {/* <Stack.Screen name="SuccessScreen" component={SuccessScreen} options={{ headerShown:false}} /> */}
+      <Stack.Screen name="SuccessScreen" component={SuccessScreen} options={{ headerShown:false}} />
+      <Stack.Screen name="OrderHistoryScreen" component={OrderHistoryScreen} options={{ headerShown:false}} />
+      <Stack.Screen name="MidtransScreen" component={MidtransScreen} />
     </Stack.Navigator>
   );
 }
